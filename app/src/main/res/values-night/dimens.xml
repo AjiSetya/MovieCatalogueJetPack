@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_item_img">125dp</dimen>
+    <dimen name="width_item_img">100dp</dimen>
+    <dimen name="text_item_title">18sp</dimen>
+    <dimen name="height_detail_img">130dp</dimen>
+    <dimen name="width_detail_img">140dp</dimen>
+    <dimen name="share_detail">48dp</dimen>
+    <dimen name="margin_top_acton">20dp</dimen>
+    <dimen name="container_detail_margin">200dp</dimen>
+    <dimen name="vote_detail">18sp</dimen>
+    <dimen name="view_margin">16dp</dimen>
+    <dimen name="title_detail">20sp</dimen>
+    <dimen name="overview_detail">18sp</dimen>
+    <dimen name="container_item_margintop">32dp</dimen>
+</resources>
