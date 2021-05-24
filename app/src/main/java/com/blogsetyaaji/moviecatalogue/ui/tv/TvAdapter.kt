@@ -61,7 +61,6 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
                     )
 
                     itemView.context.startActivity(intent, options.toBundle())
-                    Toast.makeText(itemView.context, tv.name, Toast.LENGTH_SHORT).show()
                 }
                 Glide.with(itemView.context)
                     .load(tv.poster)

@@ -61,7 +61,6 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                     )
 
                     itemView.context.startActivity(intent, options.toBundle())
-                    Toast.makeText(itemView.context, movie.name, Toast.LENGTH_SHORT).show()
                 }
                 Glide.with(itemView.context)
                     .load(movie.poster)
