@@ -52,13 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/view_margin"
-        android:layout_marginEnd="@dimen/view_margin"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/rubik_bold"
         android:text="@string/app_name"
         android:textSize="@dimen/text_item_title"
         android:textStyle="bold"
         android:transitionName="title_movie_transition"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/container_item_movie"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/container_item_movie" />
 
@@ -68,8 +68,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/view_margin"
-        android:transitionName="rating_movie_transition"
         android:numStars="5"
+        android:transitionName="rating_movie_transition"
         app:layout_constraintStart_toStartOf="@+id/title_movie"
         app:layout_constraintTop_toBottomOf="@+id/title_movie" />
 

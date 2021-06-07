@@ -1,9 +1,10 @@
 package com.blogsetyaaji.moviecatalogue.data.source
 
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.MovieResponse
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.TvResponse
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.DetailTvResponse
 import com.blogsetyaaji.moviecatalogue.networking.ApiConfig
-import com.blogsetyaaji.moviecatalogue.networking.ApiInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,6 +36,21 @@ class RemoteDataSource private constructor() {
         })
     }
 
+    fun getTv(apiKey: String, callback: LoadTvCallback) {
+        val client = ApiConfig.getApiService().fetchTv(apiKey)
+        client.enqueue(object : Callback<TvResponse> {
+            override fun onResponse(call: Call<TvResponse>, response: Response<TvResponse>) {
+                if (response.isSuccessful) {
+                    callback.onAllTvReceived(response.body())
+                }
+            }
+
+            override fun onFailure(call: Call<TvResponse>, t: Throwable) {
+                callback.onDataNotAvailabel()
+            }
+        })
+    }
+
     fun getDetailMovies(id: Int?, apiKey: String, callback: LoadDetailMovieCallback) {
         val client = ApiConfig.getApiService().fetchMovieById(id, apiKey)
         client.enqueue(object : Callback<DetailMovieResponse> {
@@ -53,6 +69,24 @@ class RemoteDataSource private constructor() {
         })
     }
 
+    fun getDetailTv(id: Int?, apiKey: String, callback: LoadDetailTvCallback) {
+        val client = ApiConfig.getApiService().fetchTvById(id, apiKey)
+        client.enqueue(object : Callback<DetailTvResponse> {
+            override fun onResponse(
+                call: Call<DetailTvResponse>,
+                response: Response<DetailTvResponse>
+            ) {
+                if (response.isSuccessful) {
+                    callback.onAllTvReceived(response.body())
+                }
+            }
+
+            override fun onFailure(call: Call<DetailTvResponse>, t: Throwable) {
+                callback.onDataNotAvailabel()
+            }
+        })
+    }
+
     interface LoadMovieCallback {
         fun onAllMoviesReceived(movieResponse: MovieResponse?)
         fun onDataNotAvailabel()
@@ -62,4 +96,15 @@ class RemoteDataSource private constructor() {
         fun onAllMoviesReceived(movieResponse: DetailMovieResponse?)
         fun onDataNotAvailabel()
     }
+
+    interface LoadTvCallback {
+        fun onAllTvReceived(tvResponse: TvResponse?)
+        fun onDataNotAvailabel()
+    }
+
+    interface LoadDetailTvCallback {
+        fun onAllTvReceived(detailTvResponse: DetailTvResponse?)
+        fun onDataNotAvailabel()
+    }
+
 }

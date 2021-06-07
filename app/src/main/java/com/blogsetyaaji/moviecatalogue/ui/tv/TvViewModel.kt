@@ -1,10 +1,13 @@
 package com.blogsetyaaji.moviecatalogue.ui.tv
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
-import com.blogsetyaaji.moviecatalogue.utils.TvDummy
+import com.blogsetyaaji.moviecatalogue.BuildConfig
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.TvResponse
+import com.blogsetyaaji.moviecatalogue.networking.ContentRepository
 
-class TvViewModel: ViewModel() {
-    fun getTv(): List<TvEntity> = TvDummy.generateDummyTv()
-
+class TvViewModel(private val contentRepository: ContentRepository): ViewModel() {
+    fun getTv(): LiveData<TvResponse?> {
+        return contentRepository.getAllTv(BuildConfig.MYAPI_KEY)
+    }
 }

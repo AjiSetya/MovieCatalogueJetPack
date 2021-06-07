@@ -27,7 +27,6 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@{viewModelDetailTv.data.name}"
                 android:scaleType="fitXY"
-                app:image="@{viewModelDetailTv.data.poster}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +108,6 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@{viewModelDetailTv.data.name}"
                         android:scaleType="centerCrop"
-                        app:image="@{viewModelDetailTv.data.poster}"
                         tools:srcCompat="@tools:sample/avatars" />
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
@@ -143,8 +141,7 @@
                 android:transitionName="rating_tv_transition"
                 android:numStars="5"
                 app:layout_constraintStart_toStartOf="@+id/text_name_tv"
-                app:layout_constraintTop_toBottomOf="@+id/text_name_tv"
-                app:rating="@{viewModelDetailTv.data.rating}" />
+                app:layout_constraintTop_toBottomOf="@+id/text_name_tv" />
 
             <TextView
                 android:id="@+id/vote_detail_tv"
@@ -154,7 +151,7 @@
                 android:fontFamily="@font/rubik_bold"
                 android:textSize="@dimen/vote_detail"
                 android:textStyle="bold"
-                app:doubleToString="@{viewModelDetailTv.data.rating}"
+                app:doubleToString="@{viewModelDetailTv.data.voteAverage}"
                 app:layout_constraintBottom_toBottomOf="@+id/rating_detail_tv"
                 app:layout_constraintStart_toEndOf="@+id/rating_detail_tv"
                 app:layout_constraintTop_toTopOf="@+id/rating_detail_tv" />

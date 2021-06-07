@@ -7,35 +7,41 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blogsetyaaji.moviecatalogue.R
-import kotlinx.android.synthetic.main.fragment_tv.*
+import com.blogsetyaaji.moviecatalogue.databinding.FragmentTvBinding
+import com.blogsetyaaji.moviecatalogue.viewmodel.ViewModelFactory
 
 
 class TvFragment : Fragment() {
+    private lateinit var fragmentTvBinding: FragmentTvBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv, container, false)
+    ): View {
+        fragmentTvBinding = FragmentTvBinding.inflate(layoutInflater, container, false)
+        return fragmentTvBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(
-                this,
-                ViewModelProvider.NewInstanceFactory()
-            )[TvViewModel::class.java]
-            val tv = viewModel.getTv()
+            val factory = ViewModelFactory.getInstance()
+            val viewModel = ViewModelProvider(this, factory)[TvViewModel::class.java]
 
             val tvAdapter = TvAdapter()
-            tvAdapter.setTv(tv)
+            fragmentTvBinding.pgTv.visibility = View.VISIBLE
 
-            rv_tv.layoutManager = LinearLayoutManager(context)
-            rv_tv.setHasFixedSize(true)
-            rv_tv.adapter = tvAdapter
+            viewModel.getTv().observe(viewLifecycleOwner, { tv ->
+                fragmentTvBinding.pgTv.visibility = View.GONE
+                tvAdapter.setTv(tv?.results)
+                tvAdapter.notifyDataSetChanged()
+            })
+
+            with(fragmentTvBinding.rvTv) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = tvAdapter
+            }
         }
     }
 }

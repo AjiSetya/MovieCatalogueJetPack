@@ -1,12 +1,13 @@
 package com.blogsetyaaji.moviecatalogue.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.blogsetyaaji.moviecatalogue.di.Injection
 import com.blogsetyaaji.moviecatalogue.networking.ContentRepository
 import com.blogsetyaaji.moviecatalogue.ui.detailmovie.DetailMovieViewModel
+import com.blogsetyaaji.moviecatalogue.ui.detailtv.DetailTvViewModel
 import com.blogsetyaaji.moviecatalogue.ui.movie.MovieViewModel
+import com.blogsetyaaji.moviecatalogue.ui.tv.TvViewModel
 
 class ViewModelFactory private constructor(private val mContentRepository: ContentRepository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -14,9 +15,9 @@ class ViewModelFactory private constructor(private val mContentRepository: Conte
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance(context: Context): ViewModelFactory =
+        fun getInstance(): ViewModelFactory =
             instance ?: synchronized(this) {
-                ViewModelFactory(Injection.provideRepository(context)).apply { instance = this }
+                ViewModelFactory(Injection.provideRepository()).apply { instance = this }
             }
     }
 
@@ -28,6 +29,12 @@ class ViewModelFactory private constructor(private val mContentRepository: Conte
             }
             modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
                 DetailMovieViewModel(mContentRepository) as T
+            }
+            modelClass.isAssignableFrom(TvViewModel::class.java) -> {
+                TvViewModel(mContentRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailTvViewModel::class.java) -> {
+                DetailTvViewModel(mContentRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
