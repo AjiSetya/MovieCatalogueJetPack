@@ -1,14 +1,14 @@
 package com.blogsetyaaji.moviecatalogue.utils
 
 import com.blogsetyaaji.moviecatalogue.R
-import com.blogsetyaaji.moviecatalogue.data.Tv
+import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
 
 object TvDummy {
-    fun generateDummyTv(): ArrayList<Tv> {
-        val tv = ArrayList<Tv>()
+    fun generateDummyTv(): ArrayList<TvEntity> {
+        val tv = ArrayList<TvEntity>()
 
         tv.add(
-            Tv(
+            TvEntity(
                 "Arrow",
                 R.drawable.poster_arrow,
                 6.0,
@@ -18,7 +18,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Doom Patrol",
                 R.drawable.poster_doom_patrol,
                 6.7,
@@ -28,7 +28,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Dragon Ball",
                 R.drawable.poster_dragon_ball,
                 7.4,
@@ -38,7 +38,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Fairy Tail",
                 R.drawable.poster_fairytail,
                 6.6,
@@ -48,7 +48,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Family Guy",
                 R.drawable.poster_family_guy,
                 6.6,
@@ -58,7 +58,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "The Flash",
                 R.drawable.poster_flash,
                 6.9,
@@ -68,7 +68,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Gotham",
                 R.drawable.poster_gotham,
                 7.0,
@@ -78,7 +78,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Grey's Anatomy",
                 R.drawable.poster_grey_anatomy,
                 6.8,
@@ -88,7 +88,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Hanna",
                 R.drawable.poster_hanna,
                 6.9,
@@ -98,7 +98,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Marvel's Iron Fist",
                 R.drawable.poster_iron_fist,
                 6.1,
@@ -108,7 +108,7 @@ object TvDummy {
             )
         )
         tv.add(
-            Tv(
+            TvEntity(
                 "Naruto Shippūden",
                 R.drawable.poster_naruto_shipudden,
                 8.0,

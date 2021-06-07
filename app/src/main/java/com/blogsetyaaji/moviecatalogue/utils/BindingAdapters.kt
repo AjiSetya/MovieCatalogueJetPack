@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
+import com.blogsetyaaji.moviecatalogue.networking.ImageNetwork.getBackdropPath
+import com.blogsetyaaji.moviecatalogue.networking.ImageNetwork.getPosterPath
 
 @BindingAdapter("image")
 fun image(view: ImageView, imageUrl: Int?) {
@@ -29,4 +31,14 @@ fun intToString(view: TextView, int: Int) {
 @BindingAdapter("doubleToString")
 fun dobleToString(view: TextView, double: Double) {
     view.text = double.toString()
+}
+
+@BindingAdapter("imageNetwork")
+fun imageNetwork(view: ImageView, imageUrl: String?) {
+    imageUrl?.let { view.load(getPosterPath(it)) }
+}
+
+@BindingAdapter("imageBgNetwork")
+fun imageBgNetwork(view: ImageView, imageUrl: String?) {
+    imageUrl?.let { view.load(getBackdropPath(it)) }
 }

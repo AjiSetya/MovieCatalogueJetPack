@@ -25,9 +25,8 @@
                 android:id="@+id/bg_detail_movie"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@{viewModelDetailMovie.data.name}"
+                android:contentDescription="@{viewModelDetailMovie.data.title}"
                 android:scaleType="fitXY"
-                app:image="@{viewModelDetailMovie.data.poster}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,9 +106,8 @@
                         android:id="@+id/img_detail_movie"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="@{viewModelDetailMovie.data.name}"
+                        android:contentDescription="@{viewModelDetailMovie.data.title}"
                         android:scaleType="centerCrop"
-                        app:image="@{viewModelDetailMovie.data.poster}"
                         tools:srcCompat="@tools:sample/avatars" />
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
@@ -126,7 +124,6 @@
                 android:maxLines="3"
                 android:transitionName="title_movie_transition"
                 android:singleLine="false"
-                android:text="@{viewModelDetailMovie.data.name}"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/title_detail"
                 android:textStyle="bold"
@@ -143,8 +140,7 @@
                 android:transitionName="rating_movie_transition"
                 android:numStars="5"
                 app:layout_constraintStart_toStartOf="@+id/text_name_movie"
-                app:layout_constraintTop_toBottomOf="@+id/text_name_movie"
-                app:rating="@{viewModelDetailMovie.data.rating}" />
+                app:layout_constraintTop_toBottomOf="@+id/text_name_movie"/>
 
             <TextView
                 android:id="@+id/vote_detail_movie"
@@ -154,7 +150,7 @@
                 android:fontFamily="@font/rubik_bold"
                 android:textSize="@dimen/vote_detail"
                 android:textStyle="bold"
-                app:doubleToString="@{viewModelDetailMovie.data.rating}"
+                app:doubleToString="@{viewModelDetailMovie.data.voteAverage}"
                 app:layout_constraintBottom_toBottomOf="@+id/rating_detail_movie"
                 app:layout_constraintStart_toEndOf="@+id/rating_detail_movie"
                 app:layout_constraintTop_toTopOf="@+id/rating_detail_movie" />

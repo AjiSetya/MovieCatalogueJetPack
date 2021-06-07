@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="160dp"
+                    android:layout_marginTop="@dimen/storyline_margintop"
                     android:fontFamily="@font/rubik_bold"
                     android:text="@string/storyline"
                     android:textSize="18sp"
@@ -86,7 +86,7 @@
             <RelativeLayout
                 android:id="@+id/relative_card"
                 android:layout_width="wrap_content"
-                android:layout_height="350dp"
+                android:layout_height="@dimen/view_image_detail_height"
                 app:layout_constraintBottom_toTopOf="@+id/constrain_detail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/constrain_detail">
@@ -96,12 +96,12 @@
                     android:layout_width="@dimen/width_detail_img"
                     android:layout_height="@dimen/height_detail_img"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="110dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="@dimen/card_detail_margintop"
+                    android:layout_marginEnd="@dimen/card_detail_marginend"
+                    android:layout_marginBottom="@dimen/card_detail_marginbottom"
                     android:transitionName="img_tv_trasition"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp">
+                    app:cardCornerRadius="@dimen/card_detail_radius"
+                    app:cardElevation="@dimen/card_detail_elevation">
 
                     <ImageView
                         android:id="@+id/img_detail_tv"

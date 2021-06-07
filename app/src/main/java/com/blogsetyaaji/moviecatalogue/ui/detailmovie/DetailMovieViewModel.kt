@@ -1,14 +1,24 @@
 package com.blogsetyaaji.moviecatalogue.ui.detailmovie
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.blogsetyaaji.moviecatalogue.data.Movie
-import com.blogsetyaaji.moviecatalogue.utils.MovieDummy
+import com.blogsetyaaji.moviecatalogue.BuildConfig
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.MovieResponse
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse
+import com.blogsetyaaji.moviecatalogue.networking.ContentRepository
 
-class DetailMovieViewModel : ViewModel() {
-    private val listDataMovies: List<Movie> = MovieDummy.generateDummyMovies()
-    var data: Movie? = null
+class DetailMovieViewModel(private val contentRepository: ContentRepository) : ViewModel() {
+//    private val listDataMovies: List<MovieEntity> = MovieDummy.generateDummyMovies()
+//    var data: MovieEntity? = null
+//
+//    fun getMovieByPosition(position: Int) {
+//        data = listDataMovies[position]
+//    }
 
-    fun getMovieByPosition(position: Int) {
-        data = listDataMovies[position]
+    var data: LiveData<DetailMovieResponse?>? = null
+
+    fun getDetailMovie(id: Int?): LiveData<DetailMovieResponse?>? {
+        data = contentRepository.getDetailMovie(id, BuildConfig.MYAPI_KEY)
+        return data
     }
 }

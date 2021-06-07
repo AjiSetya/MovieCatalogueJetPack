@@ -5,21 +5,20 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.blogsetyaaji.moviecatalogue.R
-import com.blogsetyaaji.moviecatalogue.data.Tv
+import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
 import com.blogsetyaaji.moviecatalogue.databinding.ItemListTvBinding
 import com.blogsetyaaji.moviecatalogue.ui.detailtv.DetailTvActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
-    private var listTv = ArrayList<Tv>()
+    private var listTv = ArrayList<TvEntity>()
 
-    fun setTv(tv: List<Tv>?) {
+    fun setTv(tv: List<TvEntity>?) {
         if (tv == null) return
         this.listTv.clear()
         this.listTv.addAll(tv)
@@ -41,7 +40,7 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
     class TvViewHolder(private val binding: ItemListTvBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(tv: Tv, position: Int) {
+        fun bind(tv: TvEntity, position: Int) {
             with(binding) {
                 titleTv.text = tv.name
                 ratingTv.rating = tv.rating.div(2).toFloat()

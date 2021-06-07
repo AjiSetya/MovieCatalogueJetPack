@@ -20,4 +20,12 @@
     <dimen name="title_detail">20sp</dimen>
     <dimen name="overview_detail">16sp</dimen>
     <dimen name="container_item_margintop">32dp</dimen>
+    <dimen name="card_detail_margintop">110dp</dimen>
+    <dimen name="card_detail_marginend">8dp</dimen>
+    <dimen name="card_detail_marginbottom">8dp</dimen>
+    <dimen name="card_detail_radius">8dp</dimen>
+    <dimen name="card_detail_elevation">8dp</dimen>
+    <dimen name="view_image_detail_height">350dp</dimen>
+    <dimen name="storyline_margintop">160dp</dimen>
+    <dimen name="card_item_height">120dp</dimen>
 </resources>

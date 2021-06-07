@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_item_tv"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/card_item_height"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/container_item_margintop"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -30,7 +30,7 @@
         android:layout_marginStart="@dimen/view_margin"
         android:layout_marginBottom="24dp"
         android:transitionName="img_tv_trasition"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="@dimen/card_detail_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
