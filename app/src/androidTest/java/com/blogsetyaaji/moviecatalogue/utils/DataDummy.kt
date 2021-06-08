@@ -10,7 +10,7 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.Det
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.LastEpisodeToAir
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.NextEpisodeToAir
 
-object DataDummy {
+object FakeDataDummy {
     fun generateDummyMovies(): MovieResponse {
         val movies = ArrayList<MovieEntity>()
 

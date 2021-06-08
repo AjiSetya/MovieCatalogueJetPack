@@ -5,11 +5,12 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.TvResponse
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.DetailTvResponse
 import com.blogsetyaaji.moviecatalogue.networking.ApiConfig
+import com.blogsetyaaji.moviecatalogue.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RemoteDataSource private constructor() {
+class RemoteDataSource {
 
     companion object {
         @Volatile
@@ -23,10 +24,12 @@ class RemoteDataSource private constructor() {
 
     fun getMovies(apiKey: String, callback: LoadMovieCallback) {
         val client = ApiConfig.getApiService().fetchMovie(apiKey)
+        EspressoIdlingResource.increment()
         client.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     callback.onAllMoviesReceived(response.body())
+                    EspressoIdlingResource.decrement()
                 }
             }
 
@@ -38,10 +41,12 @@ class RemoteDataSource private constructor() {
 
     fun getTv(apiKey: String, callback: LoadTvCallback) {
         val client = ApiConfig.getApiService().fetchTv(apiKey)
+        EspressoIdlingResource.increment()
         client.enqueue(object : Callback<TvResponse> {
             override fun onResponse(call: Call<TvResponse>, response: Response<TvResponse>) {
                 if (response.isSuccessful) {
                     callback.onAllTvReceived(response.body())
+                    EspressoIdlingResource.decrement()
                 }
             }
 
@@ -53,6 +58,7 @@ class RemoteDataSource private constructor() {
 
     fun getDetailMovies(id: Int?, apiKey: String, callback: LoadDetailMovieCallback) {
         val client = ApiConfig.getApiService().fetchMovieById(id, apiKey)
+        EspressoIdlingResource.increment()
         client.enqueue(object : Callback<DetailMovieResponse> {
             override fun onResponse(
                 call: Call<DetailMovieResponse>,
@@ -60,6 +66,7 @@ class RemoteDataSource private constructor() {
             ) {
                 if (response.isSuccessful) {
                     callback.onAllMoviesReceived(response.body())
+                    EspressoIdlingResource.decrement()
                 }
             }
 
@@ -71,6 +78,7 @@ class RemoteDataSource private constructor() {
 
     fun getDetailTv(id: Int?, apiKey: String, callback: LoadDetailTvCallback) {
         val client = ApiConfig.getApiService().fetchTvById(id, apiKey)
+        EspressoIdlingResource.increment()
         client.enqueue(object : Callback<DetailTvResponse> {
             override fun onResponse(
                 call: Call<DetailTvResponse>,
@@ -78,6 +86,7 @@ class RemoteDataSource private constructor() {
             ) {
                 if (response.isSuccessful) {
                     callback.onAllTvReceived(response.body())
+                    EspressoIdlingResource.decrement()
                 }
             }
 

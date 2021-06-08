@@ -2,6 +2,7 @@ package com.blogsetyaaji.moviecatalogue.ui.detailtv
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -29,7 +30,10 @@ class DetailTvActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[DetailTvViewModel::class.java]
 
+        activityDetailTvBinding.pgDetailTv.visibility = View.VISIBLE
+
         viewModel.getDetailTv(itemTv?.id)?.observe(this, { movies ->
+            activityDetailTvBinding.pgDetailTv.visibility = View.GONE
             activityDetailTvBinding.detailTvBack.setOnClickListener {
                 supportFinishAfterTransition()
             }
