@@ -1,5 +1,6 @@
 package com.blogsetyaaji.moviecatalogue.networking
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.blogsetyaaji.moviecatalogue.data.source.RemoteDataSource
@@ -9,16 +10,6 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.DetailTvResponse
 
 class ContentRepository private constructor(private val remoteRepository: RemoteDataSource){
-
-    companion object {
-        @Volatile
-        private var instance: ContentRepository? = null
-
-        fun getInstance(remoteData: RemoteDataSource): ContentRepository =
-            instance ?: synchronized(this) {
-                ContentRepository(remoteData).apply { instance = this }
-            }
-    }
 
     fun getAllMovies(apiKey: String): LiveData<MovieResponse?>{
         val movieResult = MutableLiveData<MovieResponse?>()
@@ -30,8 +21,8 @@ class ContentRepository private constructor(private val remoteRepository: Remote
                 }
             }
 
-            override fun onDataNotAvailabel() {
-
+            override fun onDataNotAvailabel(message: String?) {
+                Log.d("getAllMovies", "onDataNotAvailabel: $message", )
             }
         })
 
@@ -48,8 +39,8 @@ class ContentRepository private constructor(private val remoteRepository: Remote
                 }
             }
 
-            override fun onDataNotAvailabel() {
-
+            override fun onDataNotAvailabel(message: String?) {
+                Log.d("getAllTv", "onDataNotAvailabel: $message", )
             }
         })
 
@@ -66,8 +57,8 @@ class ContentRepository private constructor(private val remoteRepository: Remote
                 }
             }
 
-            override fun onDataNotAvailabel() {
-
+            override fun onDataNotAvailabel(message: String?) {
+                Log.d("getDetailMovie", "onDataNotAvailabel: $message", )
             }
         })
 
@@ -84,11 +75,21 @@ class ContentRepository private constructor(private val remoteRepository: Remote
                 }
             }
 
-            override fun onDataNotAvailabel() {
-
+            override fun onDataNotAvailabel(message: String?) {
+                Log.d("getDetailTv", "onDataNotAvailabel: $message", )
             }
         })
 
         return tvResult
+    }
+
+    companion object {
+        @Volatile
+        private var instance: ContentRepository? = null
+
+        fun getInstance(remoteData: RemoteDataSource): ContentRepository =
+            instance ?: synchronized(this) {
+                ContentRepository(remoteData).apply { instance = this }
+            }
     }
 }

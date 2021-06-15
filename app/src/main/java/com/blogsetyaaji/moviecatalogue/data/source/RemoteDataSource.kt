@@ -12,16 +12,6 @@ import retrofit2.Response
 
 class RemoteDataSource {
 
-    companion object {
-        @Volatile
-        private var instance: RemoteDataSource? = null
-
-        fun getInstance(): RemoteDataSource =
-            instance ?: synchronized(this) {
-                RemoteDataSource().apply { instance = this }
-            }
-    }
-
     fun getMovies(apiKey: String, callback: LoadMovieCallback) {
         val client = ApiConfig.getApiService().fetchMovie(apiKey)
         EspressoIdlingResource.increment()
@@ -34,7 +24,7 @@ class RemoteDataSource {
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                callback.onDataNotAvailabel()
+                callback.onDataNotAvailabel(t.message)
             }
         })
     }
@@ -51,7 +41,7 @@ class RemoteDataSource {
             }
 
             override fun onFailure(call: Call<TvResponse>, t: Throwable) {
-                callback.onDataNotAvailabel()
+                callback.onDataNotAvailabel(t.message)
             }
         })
     }
@@ -71,7 +61,7 @@ class RemoteDataSource {
             }
 
             override fun onFailure(call: Call<DetailMovieResponse>, t: Throwable) {
-                callback.onDataNotAvailabel()
+                callback.onDataNotAvailabel(t.message)
             }
         })
     }
@@ -91,29 +81,39 @@ class RemoteDataSource {
             }
 
             override fun onFailure(call: Call<DetailTvResponse>, t: Throwable) {
-                callback.onDataNotAvailabel()
+                callback.onDataNotAvailabel(t.message)
             }
         })
     }
 
     interface LoadMovieCallback {
         fun onAllMoviesReceived(movieResponse: MovieResponse?)
-        fun onDataNotAvailabel()
+        fun onDataNotAvailabel(message: String?)
     }
 
     interface LoadDetailMovieCallback {
         fun onAllMoviesReceived(movieResponse: DetailMovieResponse?)
-        fun onDataNotAvailabel()
+        fun onDataNotAvailabel(message: String?)
     }
 
     interface LoadTvCallback {
         fun onAllTvReceived(tvResponse: TvResponse?)
-        fun onDataNotAvailabel()
+        fun onDataNotAvailabel(message: String?)
     }
 
     interface LoadDetailTvCallback {
         fun onAllTvReceived(detailTvResponse: DetailTvResponse?)
-        fun onDataNotAvailabel()
+        fun onDataNotAvailabel(message: String?)
+    }
+
+    companion object {
+        @Volatile
+        private var instance: RemoteDataSource? = null
+
+        fun getInstance(): RemoteDataSource =
+            instance ?: synchronized(this) {
+                RemoteDataSource().apply { instance = this }
+            }
     }
 
 }

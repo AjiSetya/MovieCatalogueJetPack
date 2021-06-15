@@ -16,10 +16,6 @@ import kotlinx.android.synthetic.main.activity_detail_movie.*
 
 class DetailMovieActivity : AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_MOVIE = "DetailMovie"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val activityDetailMovieBinding: ActivityDetailMovieBinding =
@@ -77,5 +73,9 @@ class DetailMovieActivity : AppCompatActivity() {
             viewModelDetailMovie = viewModel
         }
 
+    }
+
+    companion object {
+        const val EXTRA_MOVIE = "DetailMovie"
     }
 }

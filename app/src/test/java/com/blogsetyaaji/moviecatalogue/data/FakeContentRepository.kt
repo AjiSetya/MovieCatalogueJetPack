@@ -19,7 +19,7 @@ class FakeContentRepository(private val remoteRepository: RemoteDataSource) {
                 }
             }
 
-            override fun onDataNotAvailabel() {
+            override fun onDataNotAvailabel(message: String?) {
 
             }
         })
@@ -37,7 +37,7 @@ class FakeContentRepository(private val remoteRepository: RemoteDataSource) {
                 }
             }
 
-            override fun onDataNotAvailabel() {
+            override fun onDataNotAvailabel(message: String?) {
 
             }
         })
@@ -55,7 +55,7 @@ class FakeContentRepository(private val remoteRepository: RemoteDataSource) {
                 }
             }
 
-            override fun onDataNotAvailabel() {
+            override fun onDataNotAvailabel(message: String?) {
 
             }
         })
@@ -73,7 +73,7 @@ class FakeContentRepository(private val remoteRepository: RemoteDataSource) {
                 }
             }
 
-            override fun onDataNotAvailabel() {
+            override fun onDataNotAvailabel(message: String?) {
 
             }
         })

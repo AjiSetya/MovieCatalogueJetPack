@@ -43,93 +43,84 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <View
                 android:id="@+id/constrain_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/container_detail_margin"
                 android:background="@drawable/detail_bg"
+                android:transitionName="container_transition"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:transitionName="container_transition">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/text_desc_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/view_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:textSize="@dimen/overview_detail"
-                    android:text="@{viewModelDetailTv.data.overview}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/storyline_margintop"
-                    android:fontFamily="@font/rubik_bold"
-                    android:text="@string/storyline"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <RelativeLayout
-                android:id="@+id/relative_card"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/view_image_detail_height"
-                app:layout_constraintBottom_toTopOf="@+id/constrain_detail"
+            <TextView
+                android:id="@+id/text_desc_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/view_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@{viewModelDetailTv.data.overview}"
+                android:textSize="@dimen/overview_detail"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/constrain_detail">
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
-                    android:layout_width="@dimen/width_detail_img"
-                    android:layout_height="@dimen/height_detail_img"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/card_detail_margintop"
-                    android:layout_marginEnd="@dimen/card_detail_marginend"
-                    android:layout_marginBottom="@dimen/card_detail_marginbottom"
-                    android:transitionName="img_tv_trasition"
-                    app:cardCornerRadius="@dimen/card_detail_radius"
-                    app:cardElevation="@dimen/card_detail_elevation">
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/rubik_bold"
+                android:text="@string/storyline"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-                    <ImageView
-                        android:id="@+id/img_detail_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@{viewModelDetailTv.data.name}"
-                        android:scaleType="centerCrop"
-                        tools:srcCompat="@tools:sample/avatars" />
-                </androidx.cardview.widget.CardView>
-            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="@dimen/width_detail_img"
+                android:layout_height="@dimen/height_detail_img"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="150dp"
+                android:transitionName="img_tv_trasition"
+                app:cardCornerRadius="@dimen/card_detail_radius"
+                app:cardElevation="@dimen/card_detail_elevation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_detail_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@{viewModelDetailTv.data.name}"
+                    android:scaleType="centerCrop"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
 
 
             <TextView
                 android:id="@+id/text_name_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/view_margin"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="@dimen/view_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:fontFamily="@font/rubik_bold"
                 android:maxLines="3"
-                android:transitionName="title_tv_transition"
                 android:singleLine="false"
                 android:text="@{viewModelDetailTv.data.name}"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/title_detail"
                 android:textStyle="bold"
+                android:transitionName="title_tv_transition"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/relative_card"
+                app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toTopOf="@+id/constrain_detail" />
 
             <RatingBar
@@ -138,8 +129,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/view_margin"
-                android:transitionName="rating_tv_transition"
                 android:numStars="5"
+                android:transitionName="rating_tv_transition"
                 app:layout_constraintStart_toStartOf="@+id/text_name_tv"
                 app:layout_constraintTop_toBottomOf="@+id/text_name_tv" />
 
@@ -188,7 +179,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/constrain_detail" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

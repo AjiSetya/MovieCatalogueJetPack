@@ -16,9 +16,6 @@ import kotlinx.android.synthetic.main.activity_detail_movie.*
 import kotlinx.android.synthetic.main.activity_detail_tv.*
 
 class DetailTvActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_TV = "DetailMovie"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,5 +73,9 @@ class DetailTvActivity : AppCompatActivity() {
             lifecycleOwner = this@DetailTvActivity
             viewModelDetailTv = viewModel
         }
+    }
+
+    companion object {
+        const val EXTRA_TV = "DetailMovie"
     }
 }

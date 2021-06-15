@@ -10,7 +10,7 @@ import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.blogsetyaaji.moviecatalogue.R
 import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
-import com.blogsetyaaji.moviecatalogue.databinding.ItemListTvBinding
+import com.blogsetyaaji.moviecatalogue.databinding.ItemListBinding
 import com.blogsetyaaji.moviecatalogue.ui.detailtv.DetailTvActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -26,7 +26,7 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvViewHolder {
         val itemListTvBinding =
-            ItemListTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TvViewHolder(itemListTvBinding)
     }
 
@@ -37,22 +37,22 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
 
     override fun getItemCount(): Int = listTv.size
 
-    class TvViewHolder(private val binding: ItemListTvBinding) : RecyclerView.ViewHolder(
+    class TvViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
         fun bind(tv: TvEntity?) {
             with(binding) {
-                titleTv.text = tv?.name
-                ratingTv.rating = tv?.voteAverage?.div(2)?.toFloat()!!
+                titleItem.text = tv?.name
+                ratingItem.rating = tv?.voteAverage?.div(2)?.toFloat()!!
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailTvActivity::class.java)
                     intent.putExtra(DetailTvActivity.EXTRA_TV, tv)
 
-                    val posterPair = Pair<View, String>(posterTv, "img_tv_trasition")
+                    val posterPair = Pair<View, String>(posterItem, "img_tv_trasition")
                     val containerPair =
-                        Pair<View, String>(containerItemTv, "container_transition")
-                    val titlePair = Pair<View, String>(titleTv, "title_tv_transition")
-                    val ratingPair = Pair<View, String>(ratingTv, "rating_tv_transition")
+                        Pair<View, String>(containerItem, "container_transition")
+                    val titlePair = Pair<View, String>(titleItem, "title_tv_transition")
+                    val ratingPair = Pair<View, String>(ratingItem, "rating_tv_transition")
 
                     val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         itemView.context as Activity,
@@ -67,7 +67,7 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
                         RequestOptions.placeholderOf(R.drawable.ic_loading)
                             .error(R.drawable.ic_error)
                     )
-                    .into(posterTv)
+                    .into(posterItem)
             }
         }
     }

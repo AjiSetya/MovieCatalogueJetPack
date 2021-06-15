@@ -9,6 +9,8 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.Det
 import com.blogsetyaaji.moviecatalogue.networking.ContentRepository
 import com.blogsetyaaji.moviecatalogue.ui.detailmovie.DetailMovieViewModel
 import com.blogsetyaaji.moviecatalogue.utils.DataDummy
+import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -51,6 +53,7 @@ class DetailTvViewModelTest {
         val detail = viewModel.getDetailTv(399566)?.value
         verify(contentRepository).getDetailTv(399566, BuildConfig.MYAPI_KEY)
         assertNotNull(detail)
+        assertEquals(dummyTv.name, detail?.name)
 
         viewModel.getDetailTv(399566)?.observeForever(observer)
         verify(observer).onChanged(dummyTv)
