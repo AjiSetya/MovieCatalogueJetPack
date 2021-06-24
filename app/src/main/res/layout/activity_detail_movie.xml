@@ -25,7 +25,7 @@
                 android:id="@+id/bg_detail_movie"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@{viewModelDetailMovie.data.title}"
+                android:contentDescription="@{viewModelDetailMovie.data.data.title}"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +62,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/view_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:text="@{viewModelDetailMovie.data.overview}"
+                android:text="@{viewModelDetailMovie.data.data.overview}"
                 android:textSize="@dimen/overview_detail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +97,7 @@
                     android:id="@+id/img_detail_movie"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@{viewModelDetailMovie.data.title}"
+                    android:contentDescription="@{viewModelDetailMovie.data.data.title}"
                     android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/avatars" />
             </androidx.cardview.widget.CardView>
@@ -140,7 +140,7 @@
                 android:fontFamily="@font/rubik_bold"
                 android:textSize="@dimen/vote_detail"
                 android:textStyle="bold"
-                app:doubleToString="@{viewModelDetailMovie.data.voteAverage}"
+                app:doubleToString="@{viewModelDetailMovie.data.data.voteAverage}"
                 app:layout_constraintBottom_toBottomOf="@+id/rating_detail_movie"
                 app:layout_constraintStart_toEndOf="@+id/rating_detail_movie"
                 app:layout_constraintTop_toTopOf="@+id/rating_detail_movie" />

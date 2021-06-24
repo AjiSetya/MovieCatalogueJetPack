@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.blogsetyaaji.moviecatalogue.BuildConfig
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse
-import com.blogsetyaaji.moviecatalogue.networking.ContentRepository
+import com.blogsetyaaji.moviecatalogue.data.ContentRepository
 import com.blogsetyaaji.moviecatalogue.utils.DataDummy
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before

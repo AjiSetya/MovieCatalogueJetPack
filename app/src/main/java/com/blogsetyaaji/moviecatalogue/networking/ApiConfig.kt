@@ -1,5 +1,7 @@
 package com.blogsetyaaji.moviecatalogue.networking
 
+import com.blogsetyaaji.moviecatalogue.BuildConfig
+import com.blogsetyaaji.moviecatalogue.data.source.remote.ApiInterface
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,11 +10,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object{
+        fun provideHttpLoggingInterceptor() = run {
+            HttpLoggingInterceptor().apply {
+                apply {
+                    if (BuildConfig.DEBUG) level = HttpLoggingInterceptor.Level.BODY
+                }
+            }
+        }
+
         fun getApiService(): ApiInterface {
-            val loggingInterceptor =
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
+                .addInterceptor(provideHttpLoggingInterceptor())
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/")

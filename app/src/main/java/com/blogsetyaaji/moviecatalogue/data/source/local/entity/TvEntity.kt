@@ -1,9 +1,12 @@
 package com.blogsetyaaji.moviecatalogue.data.source.local.entity
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+@Entity(tableName = "tb_tv")
 @Parcelize
 data class TvEntity(
 
@@ -40,6 +43,7 @@ data class TvEntity(
 	@field:SerializedName("name")
 	val name: String,
 
+	@PrimaryKey
 	@field:SerializedName("id")
 	val id: Int,
 

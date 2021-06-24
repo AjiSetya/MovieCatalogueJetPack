@@ -3,7 +3,7 @@ package com.blogsetyaaji.moviecatalogue.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.blogsetyaaji.moviecatalogue.di.Injection
-import com.blogsetyaaji.moviecatalogue.networking.ContentRepository
+import com.blogsetyaaji.moviecatalogue.data.ContentRepository
 import com.blogsetyaaji.moviecatalogue.ui.detailmovie.DetailMovieViewModel
 import com.blogsetyaaji.moviecatalogue.ui.detailtv.DetailTvViewModel
 import com.blogsetyaaji.moviecatalogue.ui.movie.MovieViewModel

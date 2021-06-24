@@ -1,6 +1,8 @@
 package com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.GenresItem
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.ProductionCompaniesItem
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.ProductionCountriesItem
@@ -8,6 +10,7 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.Spoken
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+@Entity(tableName = "tb_fav_movie")
 @Parcelize
 data class DetailMovieResponse(
 
@@ -38,6 +41,7 @@ data class DetailMovieResponse(
 	@field:SerializedName("production_countries")
 	val productionCountries: List<ProductionCountriesItem?>? = null,
 
+	@PrimaryKey
 	@field:SerializedName("id")
 	val id: Int? = null,
 

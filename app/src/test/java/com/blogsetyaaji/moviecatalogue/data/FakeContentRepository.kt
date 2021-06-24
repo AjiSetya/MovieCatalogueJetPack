@@ -2,7 +2,7 @@ package com.blogsetyaaji.moviecatalogue.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.blogsetyaaji.moviecatalogue.data.source.RemoteDataSource
+import com.blogsetyaaji.moviecatalogue.data.source.remote.RemoteDataSource
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.MovieResponse
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.TvResponse
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse

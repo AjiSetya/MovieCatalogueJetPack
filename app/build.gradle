@@ -72,4 +72,7 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
     testImplementation "androidx.arch.core:core-testing:$android_core_test_version"
     implementation "androidx.test.espresso:espresso-idling-resource:$idle_resource_version"
+
+    implementation "androidx.room:room-runtime:$room_runtime_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }

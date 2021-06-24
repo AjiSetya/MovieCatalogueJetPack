@@ -2,7 +2,7 @@ package com.blogsetyaaji.moviecatalogue.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.blogsetyaaji.moviecatalogue.BuildConfig
-import com.blogsetyaaji.moviecatalogue.data.source.RemoteDataSource
+import com.blogsetyaaji.moviecatalogue.data.source.remote.RemoteDataSource
 import com.blogsetyaaji.moviecatalogue.utils.DataDummy
 import com.blogsetyaaji.moviecatalogue.utils.LiveDataTestUtil
 import com.nhaarman.mockitokotlin2.any
