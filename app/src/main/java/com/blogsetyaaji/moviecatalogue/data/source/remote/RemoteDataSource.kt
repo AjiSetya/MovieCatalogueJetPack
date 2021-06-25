@@ -37,7 +37,6 @@ class RemoteDataSource {
                 resultMovie.value = ApiResponse.error(t.message.toString(), null)
             }
         })
-
         return resultMovie
     }
 

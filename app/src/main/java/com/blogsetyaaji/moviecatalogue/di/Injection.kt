@@ -8,7 +8,7 @@ import com.blogsetyaaji.moviecatalogue.data.source.local.room.ContentDatabase
 import com.blogsetyaaji.moviecatalogue.utils.AppExecutors
 
 object Injection {
-    fun provideRepository(context: Context): ContentRepository {
+    fun provideRepository(context: Context?): ContentRepository {
         val database = ContentDatabase.getInstance(context)
         val remoteRepository = RemoteDataSource.getInstance()
         val localDataSource = LocalDataSource.getInstance(database.MovieDao(), database.TvDao())

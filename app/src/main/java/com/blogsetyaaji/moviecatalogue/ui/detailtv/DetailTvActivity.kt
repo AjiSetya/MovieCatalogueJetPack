@@ -26,7 +26,7 @@ class DetailTvActivity : AppCompatActivity() {
 
         val itemTv: TvEntity? = intent.getParcelableExtra(EXTRA_TV)
 
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(applicationContext)
         val viewModel = ViewModelProvider(this, factory)[DetailTvViewModel::class.java]
 
         viewModel.getDetailTv(itemTv?.id)?.observe(this, { tv ->

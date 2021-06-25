@@ -25,7 +25,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
         val itemMovie: MovieEntity? = intent.getParcelableExtra(EXTRA_MOVIE)
 
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(applicationContext)
         val viewModel = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
 
         viewModel.getDetailMovie(itemMovie?.id)?.observe(this, { movies ->
