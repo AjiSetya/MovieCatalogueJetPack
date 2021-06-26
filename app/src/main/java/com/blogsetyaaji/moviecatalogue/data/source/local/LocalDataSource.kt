@@ -21,7 +21,7 @@ class LocalDataSource private constructor(
 
     fun getFavoriteMovies(): LiveData<List<DetailMovieResponse>> = movieDao.getFavoriteMovie()
 
-    fun getFavoriteMovieById(idMovie: Int?): LiveData<DetailMovieResponse?> =
+    fun getFavoriteMovieById(idMovie: Int?): LiveData<DetailMovieResponse> =
         movieDao.getFavoriteMovieById(idMovie)
 
     fun addFavoriteMovie(movie: DetailMovieResponse?) = movieDao.insertFavoriteMovie(movie)
@@ -37,7 +37,7 @@ class LocalDataSource private constructor(
 
     fun getFavoriteTv(): LiveData<List<DetailTvResponse>> = tvDao.getFavoriteTv()
 
-    fun getFavoriteTvById(idMovie: Int?): LiveData<DetailTvResponse?> =
+    fun getFavoriteTvById(idMovie: Int?): LiveData<DetailTvResponse> =
         tvDao.getFavoriteTvById(idMovie)
 
     fun addFavoriteTv(movie: DetailTvResponse?) = tvDao.insertFavoriteTv(movie)

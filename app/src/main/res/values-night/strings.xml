@@ -6,4 +6,6 @@
     <string name="storyline">Soryline</string>
     <string name="back_button">Back Button</string>
     <string name="error">Error occurred</string>
+    <string name="favorite">Favorite</string>
+    <string name="please_wait">Please wait</string>
 </resources>

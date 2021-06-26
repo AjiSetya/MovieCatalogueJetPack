@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.blogsetyaaji.moviecatalogue.R
 import com.blogsetyaaji.moviecatalogue.data.source.local.entity.MovieEntity
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse
 import com.blogsetyaaji.moviecatalogue.databinding.ActivityDetailMovieBinding
 import com.blogsetyaaji.moviecatalogue.viewmodel.ViewModelFactory
 import com.blogsetyaaji.moviecatalogue.vo.Status
@@ -17,6 +18,8 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
 class DetailMovieActivity : AppCompatActivity() {
+    private var isFavorite: Boolean = false
+    private lateinit var detailMovie: DetailMovieResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +31,15 @@ class DetailMovieActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(applicationContext)
         val viewModel = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
 
-        viewModel.getDetailMovie(itemMovie?.id)?.observe(this, { movies ->
+        viewModel.getDetailMovie(itemMovie?.id).observe(this, { movies ->
             if (movies != null) {
                 when (movies.status) {
                     Status.LOADING -> binding.pgDetailMovie.visibility = View.VISIBLE
                     Status.SUCCESS -> {
+                        detailMovie = movies.data!!
+
                         binding.pgDetailMovie.visibility = View.GONE
-                        binding.detailMovieBack.setOnClickListener {
-                            supportFinishAfterTransition()
-                        }
+
                         binding.detailMovieShare.setOnClickListener {
                             val sendIntent: Intent = Intent().apply {
                                 action = Intent.ACTION_SEND
@@ -62,24 +65,50 @@ class DetailMovieActivity : AppCompatActivity() {
 
         })
 
+        viewModel.getFavoriteMovie(itemMovie?.id).observe(this, {
+            isFavorite = if (it?.id == itemMovie?.id) {
+                binding.detailMovieFavorite.setImageResource(R.drawable.ic_baseline_favorite_selected)
+                true
+            } else {
+                binding.detailMovieFavorite.setImageResource(R.drawable.ic_baseline_favorite_unselected)
+                false
+            }
+        })
+
+        binding.detailMovieFavorite.setOnClickListener {
+            if (this::detailMovie.isInitialized) {
+                if (isFavorite) {
+                    viewModel.deleteMovieFromFavorite(detailMovie)
+                } else {
+                    viewModel.addMovieToFavorite(detailMovie)
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w500" + itemMovie?.posterPath)
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
-            )
-            .into(binding.imgDetailMovie)
+            ).into(binding.imgDetailMovie)
+
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w500" + itemMovie?.posterPath)
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
-            )
-            .into(binding.bgDetailMovie)
+            ).into(binding.bgDetailMovie)
 
         binding.textNameMovie.text = itemMovie?.title
         binding.ratingDetailMovie.rating =
             itemMovie?.voteAverage?.div(2)?.toFloat()!!
+
+        binding.detailMovieBack.setOnClickListener {
+            supportFinishAfterTransition()
+        }
 
         binding.run {
             lifecycleOwner = this@DetailMovieActivity

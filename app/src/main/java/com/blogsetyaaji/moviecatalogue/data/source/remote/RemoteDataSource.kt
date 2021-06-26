@@ -10,6 +10,7 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.DetailTvResponse
 import com.blogsetyaaji.moviecatalogue.networking.ApiConfig
 import com.blogsetyaaji.moviecatalogue.utils.EspressoIdlingResource
+import com.blogsetyaaji.moviecatalogue.vo.Resource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,46 +62,46 @@ class RemoteDataSource {
         return resultTv
     }
 
-    fun getDetailMovies(id: Int?, apiKey: String): LiveData<ApiResponse<DetailMovieResponse?>> {
+    fun getDetailMovies(id: Int?, apiKey: String): LiveData<Resource<DetailMovieResponse>> {
         val client = ApiConfig.getApiService().fetchMovieById(id, apiKey)
         EspressoIdlingResource.increment()
-        val resultDetailMovie = MutableLiveData<ApiResponse<DetailMovieResponse?>>()
+        val resultDetailMovie = MutableLiveData<Resource<DetailMovieResponse>>()
         client.enqueue(object : Callback<DetailMovieResponse> {
             override fun onResponse(
                 call: Call<DetailMovieResponse>,
                 response: Response<DetailMovieResponse>
             ) {
                 if (response.isSuccessful) {
-                    resultDetailMovie.value = ApiResponse.success(response.body())
+                    resultDetailMovie.value = Resource.success(response.body())
                     EspressoIdlingResource.decrement()
                 }
             }
 
             override fun onFailure(call: Call<DetailMovieResponse>, t: Throwable) {
-                resultDetailMovie.value = ApiResponse.error(t.message.toString(), null)
+                resultDetailMovie.value = Resource.error(t.message.toString(), null)
             }
         })
 
         return resultDetailMovie
     }
 
-    fun getDetailTv(id: Int?, apiKey: String): LiveData<ApiResponse<DetailTvResponse?>> {
+    fun getDetailTv(id: Int?, apiKey: String): LiveData<Resource<DetailTvResponse>> {
         val client = ApiConfig.getApiService().fetchTvById(id, apiKey)
         EspressoIdlingResource.increment()
-        val resultDetailTv = MutableLiveData<ApiResponse<DetailTvResponse?>>()
+        val resultDetailTv = MutableLiveData<Resource<DetailTvResponse>>()
         client.enqueue(object : Callback<DetailTvResponse> {
             override fun onResponse(
                 call: Call<DetailTvResponse>,
                 response: Response<DetailTvResponse>
             ) {
                 if (response.isSuccessful) {
-                    resultDetailTv.value = ApiResponse.success(response.body())
+                    resultDetailTv.value = Resource.success(response.body())
                     EspressoIdlingResource.decrement()
                 }
             }
 
             override fun onFailure(call: Call<DetailTvResponse>, t: Throwable) {
-                resultDetailTv.value = ApiResponse.error(t.message.toString(), null)
+                resultDetailTv.value = Resource.error(t.message.toString(), null)
             }
         })
 

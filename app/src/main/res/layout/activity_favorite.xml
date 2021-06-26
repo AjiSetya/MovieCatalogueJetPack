@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_bg"
-    tools:context=".ui.home.MainActivity">
+    tools:context=".ui.favorite.FavoriteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,12 +14,16 @@
         android:theme="@style/Theme.MovieCatalogue.AppBarOverlay"
         app:elevation="0dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:minHeight="?actionBarSize"
-            app:titleTextColor="@color/black"/>
+            android:padding="@dimen/appbar_padding"
+            android:text="@string/favorite"
+            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -28,7 +32,7 @@
             android:background="@android:color/transparent"
             app:tabIndicatorFullWidth="false"
             app:tabSelectedTextColor="@color/black"
-            app:tabTextColor="@android:color/darker_gray" />
+            app:tabTextColor="@android:color/darker_gray"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
@@ -36,5 +40,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

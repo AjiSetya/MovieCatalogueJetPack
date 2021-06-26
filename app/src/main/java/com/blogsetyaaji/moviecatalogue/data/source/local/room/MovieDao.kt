@@ -20,7 +20,7 @@ interface MovieDao {
     fun getFavoriteMovie(): LiveData<List<DetailMovieResponse>>
 
     @Query("SELECT * FROM tb_fav_movie WHERE id = :idMovie")
-    fun getFavoriteMovieById(idMovie: Int?): LiveData<DetailMovieResponse?>
+    fun getFavoriteMovieById(idMovie: Int?): LiveData<DetailMovieResponse>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteMovie(movie: DetailMovieResponse?)

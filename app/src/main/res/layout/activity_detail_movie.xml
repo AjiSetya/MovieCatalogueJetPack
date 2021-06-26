@@ -169,6 +169,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_share" />
 
+            <ImageButton
+                android:id="@+id/detail_movie_favorite"
+                android:layout_width="@dimen/share_detail"
+                android:layout_height="@dimen/share_detail"
+                android:layout_marginTop="@dimen/margin_top_acton"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/back_bg"
+                android:contentDescription="@string/back_button"
+                app:layout_constraintEnd_toStartOf="@+id/detail_movie_share"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_favorite_unselected" />
+
             <ProgressBar
                 android:id="@+id/pg_detail_movie"
                 style="?android:attr/progressBarStyle"

@@ -20,7 +20,7 @@ interface TvDao {
     fun getFavoriteTv(): LiveData<List<DetailTvResponse>>
 
     @Query("SELECT * FROM tb_fav_tv WHERE id = :idTv")
-    fun getFavoriteTvById(idTv: Int?): LiveData<DetailTvResponse?>
+    fun getFavoriteTvById(idTv: Int?): LiveData<DetailTvResponse>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteTv(tv: DetailTvResponse?)

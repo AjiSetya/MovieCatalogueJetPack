@@ -18,7 +18,8 @@ class ContentRepository private constructor(
 ) {
 
     fun getAllMovies(apiKey: String): LiveData<Resource<List<MovieEntity?>?>> {
-        return object : NetworkBoundResource<List<MovieEntity?>?, List<MovieEntity?>?>(appExecutors) {
+        return object :
+            NetworkBoundResource<List<MovieEntity?>?, List<MovieEntity?>?>(appExecutors) {
             override fun loadFromDB(): LiveData<List<MovieEntity?>?> =
                 localDataSource.getAllMovie()
 
@@ -58,49 +59,31 @@ class ContentRepository private constructor(
         }.asLiveData()
     }
 
-    fun getDetailMovie(id: Int?, apiKey: String): LiveData<Resource<DetailMovieResponse?>> {
-        return object :
-            NetworkBoundResource<DetailMovieResponse?, DetailMovieResponse?>(appExecutors) {
-            override fun loadFromDB(): LiveData<DetailMovieResponse?> =
-                localDataSource.getFavoriteMovieById(id)
+    fun getDetailMovie(id: Int?, apiKey: String): LiveData<Resource<DetailMovieResponse>> =
+        remoteRepository.getDetailMovies(id, apiKey)
+
+    fun getDetailTv(id: Int?, apiKey: String): LiveData<Resource<DetailTvResponse>> =
+        remoteRepository.getDetailTv(id, apiKey)
 
 
-            override fun shouldFetch(data: DetailMovieResponse?): Boolean =
-                data == null
+    fun setFavoriteMovie(movie: DetailMovieResponse) =
+        appExecutors.diskIO().execute { localDataSource.addFavoriteMovie(movie) }
 
-            override fun createCall(): LiveData<ApiResponse<DetailMovieResponse?>> =
-                remoteRepository.getDetailMovies(id, apiKey)
-
-            override fun saveCallResult(data: DetailMovieResponse?) =
-                localDataSource.addFavoriteMovie(data)
-
-        }.asLiveData()
-    }
-
-    fun getDetailTv(id: Int?, apiKey: String): LiveData<Resource<DetailTvResponse?>> {
-        return object : NetworkBoundResource<DetailTvResponse?, DetailTvResponse?>(appExecutors) {
-            override fun loadFromDB(): LiveData<DetailTvResponse?> =
-                localDataSource.getFavoriteTvById(id)
-
-            override fun shouldFetch(data: DetailTvResponse?): Boolean =
-                data == null
-
-            override fun createCall(): LiveData<ApiResponse<DetailTvResponse?>> =
-                remoteRepository.getDetailTv(id, apiKey)
-
-            override fun saveCallResult(data: DetailTvResponse?) =
-                localDataSource.addFavoriteTv(data)
-
-        }.asLiveData()
-    }
+    fun getFavoriteMovieById(id: Int?) = localDataSource.getFavoriteMovieById(id)
 
     fun getAllFavoriteMovie() =
         appExecutors.diskIO().execute { localDataSource.getFavoriteMovies() }
 
-    fun getAllFavoriteTv() = appExecutors.diskIO().execute { localDataSource.getFavoriteTv() }
-
     fun deleteFavoriteMovie(movie: DetailMovieResponse) =
         appExecutors.diskIO().execute { localDataSource.deleteFavoriteMovie(movie) }
+
+
+    fun setFavoriteTv(tv: DetailTvResponse) =
+        appExecutors.diskIO().execute { localDataSource.addFavoriteTv(tv) }
+
+    fun getFavoriteTvById(id: Int?) = localDataSource.getFavoriteTvById(id)
+
+    fun getAllFavoriteTv() = appExecutors.diskIO().execute { localDataSource.getFavoriteTv() }
 
     fun deleteFavoriteTv(tv: DetailTvResponse) =
         appExecutors.diskIO().execute { localDataSource.deleteFavoriteTv(tv) }
