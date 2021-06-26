@@ -40,41 +40,45 @@ class ContentRepositoryTest {
 
     @Test
     fun getAllMovies() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MovieEntity>
+        val dataSourceFactory =
+            mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MovieEntity>
         `when`(local.getAllMovie()).thenReturn(dataSourceFactory)
         contentRepository.getAllMovies(BuildConfig.MYAPI_KEY)
 
-        val movieEntities = Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyMovieEntities()))
+        val movieEntities =
+            Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyMovieEntities()))
         verify(local).getAllMovie()
         assertNotNull(movieEntities.data)
         assertEquals(movieResponse.results?.size?.toLong(), movieEntities.data?.size?.toLong())
     }
 
     @Test
-    fun getAllTv(){
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, TvEntity>
+    fun getAllTv() {
+        val dataSourceFactory =
+            mock(DataSource.Factory::class.java) as DataSource.Factory<Int, TvEntity>
         `when`(local.getAllTv()).thenReturn(dataSourceFactory)
         contentRepository.getAllTv(BuildConfig.MYAPI_KEY)
 
-        val tvEntities = Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyTvEntities()))
+        val tvEntities =
+            Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyTvEntities()))
         verify(local).getAllTv()
         assertNotNull(tvEntities.data)
         assertEquals(tvResponse.results.size.toLong(), tvEntities.data?.size?.toLong())
     }
 
     @Test
-    fun getDetailMovie(){
-        contentRepository.getDetailMovie(399566 ,BuildConfig.MYAPI_KEY)
-        verify(remote).getDetailMovies(399566 ,BuildConfig.MYAPI_KEY)
+    fun getDetailMovie() {
+        contentRepository.getDetailMovie(399566, BuildConfig.MYAPI_KEY)
+        verify(remote).getDetailMovies(399566, BuildConfig.MYAPI_KEY)
         val movieEntities = Resource.success(DataDummy.generateDummyDetailMovie())
         assertNotNull(movieEntities.data)
         assertEquals(detailMovieResponse.title, movieEntities.data?.title)
     }
 
     @Test
-    fun getDetailTv(){
-        contentRepository.getDetailTv(60735 ,BuildConfig.MYAPI_KEY)
-        verify(remote).getDetailTv(60735 ,BuildConfig.MYAPI_KEY)
+    fun getDetailTv() {
+        contentRepository.getDetailTv(60735, BuildConfig.MYAPI_KEY)
+        verify(remote).getDetailTv(60735, BuildConfig.MYAPI_KEY)
         val movieEntities = Resource.success(DataDummy.generateDummyDetailTv())
         assertNotNull(movieEntities.data)
         assertEquals(detailTvResponse.name, movieEntities.data?.name)
@@ -113,7 +117,7 @@ class ContentRepositoryTest {
     }
 
     @Test
-    fun getFavoriteMovieById(){
+    fun getFavoriteMovieById() {
         contentRepository.getFavoriteMovieById(399566)
         verify(local).getFavoriteMovieById(399566)
         val movieEntities = Resource.success(DataDummy.generateDummyDetailMovie())
@@ -122,7 +126,7 @@ class ContentRepositoryTest {
     }
 
     @Test
-    fun getFavoriteTvById(){
+    fun getFavoriteTvById() {
         contentRepository.getFavoriteTvById(60735)
         verify(local).getFavoriteTvById(60735)
         val tvEntities = Resource.success(DataDummy.generateDummyDetailTv())

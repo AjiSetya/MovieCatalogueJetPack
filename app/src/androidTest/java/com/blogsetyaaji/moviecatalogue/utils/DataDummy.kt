@@ -355,6 +355,8 @@ object FakeDataDummy {
             NextEpisodeToAir(),
             true,
             "2021-05-25",
+            "www.goog.e.com",
+            "Release"
         )
     }
 }
