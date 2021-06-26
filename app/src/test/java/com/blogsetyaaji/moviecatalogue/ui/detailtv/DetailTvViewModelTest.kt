@@ -7,6 +7,7 @@ import com.blogsetyaaji.moviecatalogue.BuildConfig
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.DetailTvResponse
 import com.blogsetyaaji.moviecatalogue.data.ContentRepository
 import com.blogsetyaaji.moviecatalogue.utils.DataDummy
+import com.blogsetyaaji.moviecatalogue.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -28,7 +29,7 @@ class DetailTvViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<DetailTvResponse?>
+    private lateinit var observer: Observer<Resource<DetailTvResponse>>
 
     @Mock
     private lateinit var contentRepository: ContentRepository
@@ -40,19 +41,19 @@ class DetailTvViewModelTest {
 
     @Test
     fun testGetMovies() {
-        val dummyTv: DetailTvResponse = DataDummy.generateDummyDetailTv()
-        val detailTv = MutableLiveData<DetailTvResponse>()
-        detailTv.setValue(dummyTv)
+        val dummyTv = Resource.success(DataDummy.generateDummyDetailTv())
+        val detailTv = MutableLiveData<Resource<DetailTvResponse>>()
+        detailTv.value = dummyTv
 
         `when`(contentRepository.getDetailTv(399566, BuildConfig.MYAPI_KEY)).thenReturn(
             detailTv
         )
-        val detail = viewModel.getDetailTv(399566)?.value
+        val detail = viewModel.getDetailTv(399566).value
         verify(contentRepository).getDetailTv(399566, BuildConfig.MYAPI_KEY)
         assertNotNull(detail)
-        assertEquals(dummyTv.name, detail?.name)
+        assertEquals(dummyTv.data?.name, detail?.data?.name)
 
-        viewModel.getDetailTv(399566)?.observeForever(observer)
+        viewModel.getDetailTv(399566).observeForever(observer)
         verify(observer).onChanged(dummyTv)
     }
 }

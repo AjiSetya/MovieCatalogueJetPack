@@ -3,10 +3,11 @@ package com.blogsetyaaji.moviecatalogue.ui.tv
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.blogsetyaaji.moviecatalogue.BuildConfig
-import com.blogsetyaaji.moviecatalogue.data.source.remote.response.TvResponse
 import com.blogsetyaaji.moviecatalogue.data.ContentRepository
-import com.blogsetyaaji.moviecatalogue.utils.DataDummy
+import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
+import com.blogsetyaaji.moviecatalogue.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -28,10 +29,13 @@ class TvViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<TvResponse?>
+    private lateinit var observer: Observer<Resource<PagedList<TvEntity>>>
 
     @Mock
     private lateinit var contentRepository: ContentRepository
+
+    @Mock
+    private lateinit var pagedList: PagedList<TvEntity>
 
     @Before
     fun setUp() {
@@ -40,15 +44,16 @@ class TvViewModelTest {
 
     @Test
     fun testGetMovies() {
-        val dummyTv: TvResponse = DataDummy.generateDummyTv()
-        val tv = MutableLiveData<TvResponse>()
-        tv.setValue(dummyTv)
+        val dummyTv = Resource.success(pagedList)
+        `when`(dummyTv.data?.size).thenReturn(5)
+        val tv = MutableLiveData<Resource<PagedList<TvEntity>>>()
+        tv.value = dummyTv
 
         `when`(contentRepository.getAllTv(BuildConfig.MYAPI_KEY)).thenReturn(tv)
-        val tvEntities = viewModel.getTv().value
+        val tvEntities = viewModel.getTv().value?.data
         verify(contentRepository).getAllTv(BuildConfig.MYAPI_KEY)
         assertNotNull(tvEntities)
-        assertEquals(5, tvEntities?.results?.size)
+        assertEquals(5, tvEntities?.size)
 
         viewModel.getTv().observeForever(observer)
         verify(observer).onChanged(dummyTv)
