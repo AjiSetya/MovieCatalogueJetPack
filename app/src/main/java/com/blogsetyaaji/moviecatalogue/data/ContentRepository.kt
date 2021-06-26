@@ -17,42 +17,41 @@ class ContentRepository private constructor(
     private val appExecutors: AppExecutors
 ) {
 
-    fun getAllMovies(apiKey: String): LiveData<Resource<List<MovieEntity>?>> {
-        return object : NetworkBoundResource<List<MovieEntity>?, List<MovieEntity>?>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<MovieEntity>?> =
+    fun getAllMovies(apiKey: String): LiveData<Resource<List<MovieEntity?>?>> {
+        return object : NetworkBoundResource<List<MovieEntity?>?, List<MovieEntity?>?>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<MovieEntity?>?> =
                 localDataSource.getAllMovie()
 
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean =
+            override fun shouldFetch(data: List<MovieEntity?>?): Boolean =
                 data == null || data.isEmpty()
 
 
-            override fun createCall(): LiveData<ApiResponse<List<MovieEntity>?>> =
+            override fun createCall(): LiveData<ApiResponse<List<MovieEntity?>?>> =
                 remoteRepository.getMovies(apiKey)
 
 
-            override fun saveCallResult(data: List<MovieEntity>?) {
+            override fun saveCallResult(data: List<MovieEntity?>?) =
                 localDataSource.addMovie(data)
-            }
 
         }.asLiveData()
     }
 
-    fun getAllTv(apiKey: String): LiveData<Resource<List<TvEntity>?>> {
-        return object : NetworkBoundResource<List<TvEntity>?, List<TvEntity>?>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<TvEntity>?> =
+    fun getAllTv(apiKey: String): LiveData<Resource<List<TvEntity?>?>> {
+        return object : NetworkBoundResource<List<TvEntity?>?, List<TvEntity?>?>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<TvEntity?>?> =
                 localDataSource.getAllTv()
 
 
-            override fun shouldFetch(data: List<TvEntity>?): Boolean =
+            override fun shouldFetch(data: List<TvEntity?>?): Boolean =
                 data == null || data.isEmpty()
 
 
-            override fun createCall(): LiveData<ApiResponse<List<TvEntity>?>> =
+            override fun createCall(): LiveData<ApiResponse<List<TvEntity?>?>> =
                 remoteRepository.getTv(apiKey)
 
 
-            override fun saveCallResult(data: List<TvEntity>?) =
+            override fun saveCallResult(data: List<TvEntity?>?) =
                 localDataSource.addTv(data)
 
 

@@ -8,10 +8,10 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.Det
 @Dao
 interface TvDao {
     @Query("SELECT * FROM tb_tv")
-    fun getTv(): LiveData<List<TvEntity>?>
+    fun getTv(): LiveData<List<TvEntity?>?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTv(tv: List<TvEntity>?)
+    fun insertTv(tv: List<TvEntity?>?)
 
     @Query("DELETE FROM tb_tv")
     fun clearTv()

@@ -8,5 +8,5 @@ import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
 import com.blogsetyaaji.moviecatalogue.vo.Resource
 
 class TvViewModel(private val contentRepository: ContentRepository) : ViewModel() {
-    fun getTv(): LiveData<Resource<List<TvEntity>?>> = contentRepository.getAllTv(BuildConfig.MYAPI_KEY)
+    fun getTv(): LiveData<Resource<List<TvEntity?>?>> = contentRepository.getAllTv(BuildConfig.MYAPI_KEY)
 }

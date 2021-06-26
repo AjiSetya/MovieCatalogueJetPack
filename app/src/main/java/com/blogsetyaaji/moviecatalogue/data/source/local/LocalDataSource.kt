@@ -13,9 +13,9 @@ class LocalDataSource private constructor(
     private val tvDao: TvDao
 ) {
 
-    fun getAllMovie(): LiveData<List<MovieEntity>?> = movieDao.getMovie()
+    fun getAllMovie(): LiveData<List<MovieEntity?>?> = movieDao.getMovie()
 
-    fun addMovie(movie: List<MovieEntity>?) = movieDao.insertMovie(movie)
+    fun addMovie(movie: List<MovieEntity?>?) = movieDao.insertMovie(movie)
 
     fun clearAllMovie() = movieDao.clearMovie()
 
@@ -29,9 +29,9 @@ class LocalDataSource private constructor(
     fun deleteFavoriteMovie(movie: DetailMovieResponse?) = movieDao.deleteFavoriteMovie(movie)
 
 
-    fun getAllTv(): LiveData<List<TvEntity>?> = tvDao.getTv()
+    fun getAllTv(): LiveData<List<TvEntity?>?> = tvDao.getTv()
 
-    fun addTv(tv: List<TvEntity>?) = tvDao.insertTv(tv)
+    fun addTv(tv: List<TvEntity?>?) = tvDao.insertTv(tv)
 
     fun clearAllTv() = tvDao.clearTv()
 

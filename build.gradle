@@ -51,4 +51,5 @@ ext {
 
     room_version = '2.2.3'
     room_runtime_version = '2.3.0'
+    paging_version = '2.1.1'
 }

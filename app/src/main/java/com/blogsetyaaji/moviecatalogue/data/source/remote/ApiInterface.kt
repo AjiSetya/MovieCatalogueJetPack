@@ -16,24 +16,24 @@ interface ApiInterface {
 
     // discover movie
     @GET("/3/discover/movie?language=en-US")
-    fun fetchMovie(@Query("api_key") apiKey: String): Call<Resource<List<MovieEntity>>>
+    fun fetchMovie(@Query("api_key") apiKey: String): Call<MovieResponse>
 
     // discover tv
     @GET("/3/discover/tv?language=en-US")
-    fun fetchTv(@Query("api_key") apiKey: String): Call<Resource<List<TvEntity>>>
+    fun fetchTv(@Query("api_key") apiKey: String): Call<TvResponse>
 
     // get detail movie
     @GET("/3/movie/{movie_id}")
     fun fetchMovieById(
         @Path("movie_id") id: Int?,
         @Query("api_key") apiKey: String
-    ): Call<Resource<DetailMovieResponse>>
+    ): Call<DetailMovieResponse>
 
     // get detail movie
     @GET("/3/tv/{tv_id}")
     fun fetchTvById(
         @Path("tv_id") id: Int?,
         @Query("api_key") apiKey: String
-    ): Call<Resource<DetailTvResponse>>
+    ): Call<DetailTvResponse>
 
 }

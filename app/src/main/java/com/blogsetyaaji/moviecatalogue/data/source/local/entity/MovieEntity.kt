@@ -11,45 +11,45 @@ import kotlinx.android.parcel.Parcelize
 data class MovieEntity(
 
 	@field:SerializedName("overview")
-	val overview: String,
+	val overview: String?,
 
 	@field:SerializedName("original_language")
-	val originalLanguage: String,
+	val originalLanguage: String?,
 
 	@field:SerializedName("original_title")
-	val originalTitle: String,
+	val originalTitle: String?,
 
 	@field:SerializedName("video")
-	val video: Boolean,
+	val video: Boolean?,
 
 	@field:SerializedName("title")
-	val title: String,
+	val title: String?,
 
 	@field:SerializedName("genre_ids")
-	val genreIds: List<Int>,
+	val genreIds: List<Int>?,
 
 	@field:SerializedName("poster_path")
-	val posterPath: String,
+	val posterPath: String?,
 
 	@field:SerializedName("backdrop_path")
-	val backdropPath: String,
+	val backdropPath: String?,
 
 	@field:SerializedName("release_date")
-	val releaseDate: String,
+	val releaseDate: String?,
 
 	@field:SerializedName("popularity")
-	val popularity: Double,
+	val popularity: Double?,
 
 	@field:SerializedName("vote_average")
-	val voteAverage: Double,
+	val voteAverage: Double?,
 
 	@PrimaryKey
 	@field:SerializedName("id")
 	val id: Int,
 
 	@field:SerializedName("adult")
-	val adult: Boolean,
+	val adult: Boolean?,
 
 	@field:SerializedName("vote_count")
-	val voteCount: Int
+	val voteCount: Int?
 ) : Parcelable

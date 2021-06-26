@@ -8,10 +8,10 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM tb_movie")
-    fun getMovie(): LiveData<List<MovieEntity>?>
+    fun getMovie(): LiveData<List<MovieEntity?>?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: List<MovieEntity>?)
+    fun insertMovie(movie: List<MovieEntity?>?)
 
     @Query("DELETE FROM tb_movie")
     fun clearMovie()
