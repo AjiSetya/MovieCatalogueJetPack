@@ -14,14 +14,15 @@ import com.blogsetyaaji.moviecatalogue.viewmodel.ViewModelFactory
 import com.blogsetyaaji.moviecatalogue.vo.Status
 
 class MovieFragment : Fragment() {
-    private lateinit var binding: FragmentMovieBinding
+    private var _fragmentMovieBinding: FragmentMovieBinding? = null
+    private val binding get() = _fragmentMovieBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
-        return binding.root
+    ): View? {
+        _fragmentMovieBinding = FragmentMovieBinding.inflate(layoutInflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,25 +36,29 @@ class MovieFragment : Fragment() {
             viewModel.getMovie().observe(viewLifecycleOwner, { movies ->
                 if (movies != null) {
                     when (movies.status) {
-                        Status.LOADING -> binding.pgMovie.visibility = View.VISIBLE
+                        Status.LOADING -> binding?.pgMovie?.visibility = View.VISIBLE
                         Status.SUCCESS -> {
-                            binding.pgMovie.visibility = View.GONE
-                            movieAdapter.setMovies(movies.data)
-                            movieAdapter.notifyDataSetChanged()
+                            binding?.pgMovie?.visibility = View.GONE
+                            movieAdapter.submitList(movies.data)
                         }
                         Status.ERROR -> {
-                            binding.pgMovie.visibility = View.GONE
+                            binding?.pgMovie?.visibility = View.GONE
                             Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             })
 
-            with(binding.rvMovie) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = movieAdapter
+            with(binding?.rvMovie) {
+                this?.layoutManager = LinearLayoutManager(context)
+                this?.setHasFixedSize(true)
+                this?.adapter = movieAdapter
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _fragmentMovieBinding = null
     }
 }

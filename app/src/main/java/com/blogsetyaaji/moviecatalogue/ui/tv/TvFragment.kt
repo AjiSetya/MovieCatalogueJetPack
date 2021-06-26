@@ -15,14 +15,15 @@ import com.blogsetyaaji.moviecatalogue.vo.Status
 
 
 class TvFragment : Fragment() {
-    private lateinit var binding: FragmentTvBinding
+    private var _fragmentTvBinding: FragmentTvBinding? = null
+    private val binding get() = _fragmentTvBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTvBinding.inflate(layoutInflater, container, false)
-        return binding.root
+    ): View? {
+        _fragmentTvBinding = FragmentTvBinding.inflate(layoutInflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,30 +36,34 @@ class TvFragment : Fragment() {
 
 
             viewModel.getTv().observe(viewLifecycleOwner, { tv ->
-                binding.pgTv.visibility = View.GONE
+                binding?.pgTv?.visibility = View.GONE
                 tvAdapter.setTv(tv.data)
                 tvAdapter.notifyDataSetChanged()
                 if (tv != null) {
                     when (tv.status) {
-                        Status.LOADING -> binding.pgTv.visibility = View.VISIBLE
+                        Status.LOADING -> binding?.pgTv?.visibility = View.VISIBLE
                         Status.SUCCESS -> {
-                            binding.pgTv.visibility = View.GONE
-                            tvAdapter.setTv(tv.data)
-                            tvAdapter.notifyDataSetChanged()
+                            binding?.pgTv?.visibility = View.GONE
+                            tvAdapter.submitList(tv.data)
                         }
                         Status.ERROR -> {
-                            binding.pgTv.visibility = View.GONE
+                            binding?.pgTv?.visibility = View.GONE
                             Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             })
 
-            with(binding.rvTv) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = tvAdapter
+            with(binding?.rvTv) {
+                this?.layoutManager = LinearLayoutManager(context)
+                this?.setHasFixedSize(true)
+                this?.adapter = tvAdapter
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _fragmentTvBinding = null
     }
 }
