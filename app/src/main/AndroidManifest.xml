@@ -14,7 +14,8 @@
         <activity
             android:name=".ui.favorite.FavoriteActivity"
             android:label="@string/title_activity_favorite"
-            android:theme="@style/Theme.MovieCatalogue.NoActionBar"/>
+            android:theme="@style/Theme.MovieCatalogue.NoActionBar"
+            android:parentActivityName=".ui.home.MainActivity"/>
         <activity
             android:name=".ui.detailtv.DetailTvActivity"
             android:parentActivityName=".ui.home.MainActivity"

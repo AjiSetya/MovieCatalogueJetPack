@@ -59,8 +59,6 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                         posterPair, containerPair, titlePair, ratingPair
                     )
 
-//                    Toast.makeText(itemView.context, movie.id.toString(), Toast.LENGTH_LONG).show()
-
                     itemView.context.startActivity(intent, options.toBundle())
                 }
                 Glide.with(itemView.context)

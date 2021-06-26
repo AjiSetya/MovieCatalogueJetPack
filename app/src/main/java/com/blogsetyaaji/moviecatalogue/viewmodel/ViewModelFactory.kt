@@ -7,6 +7,8 @@ import com.blogsetyaaji.moviecatalogue.di.Injection
 import com.blogsetyaaji.moviecatalogue.data.ContentRepository
 import com.blogsetyaaji.moviecatalogue.ui.detailmovie.DetailMovieViewModel
 import com.blogsetyaaji.moviecatalogue.ui.detailtv.DetailTvViewModel
+import com.blogsetyaaji.moviecatalogue.ui.favorite.movie.FavoriteMovieViewModel
+import com.blogsetyaaji.moviecatalogue.ui.favorite.tv.FavoriteTvViewModel
 import com.blogsetyaaji.moviecatalogue.ui.movie.MovieViewModel
 import com.blogsetyaaji.moviecatalogue.ui.tv.TvViewModel
 
@@ -26,6 +28,12 @@ class ViewModelFactory private constructor(private val mContentRepository: Conte
             }
             modelClass.isAssignableFrom(DetailTvViewModel::class.java) -> {
                 DetailTvViewModel(mContentRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteMovieViewModel::class.java) -> {
+                FavoriteMovieViewModel(mContentRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteTvViewModel::class.java) -> {
+                FavoriteTvViewModel(mContentRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

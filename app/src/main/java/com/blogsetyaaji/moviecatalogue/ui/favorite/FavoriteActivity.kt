@@ -23,5 +23,7 @@ class FavoriteActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
         tabs.setupWithViewPager(viewPager)
+
+        setSupportActionBar(binding.toolbar)
     }
 }

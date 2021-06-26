@@ -71,8 +71,7 @@ class ContentRepository private constructor(
 
     fun getFavoriteMovieById(id: Int?) = localDataSource.getFavoriteMovieById(id)
 
-    fun getAllFavoriteMovie() =
-        appExecutors.diskIO().execute { localDataSource.getFavoriteMovies() }
+    fun getAllFavoriteMovie() =  localDataSource.getFavoriteMovies()
 
     fun deleteFavoriteMovie(movie: DetailMovieResponse) =
         appExecutors.diskIO().execute { localDataSource.deleteFavoriteMovie(movie) }
@@ -83,7 +82,7 @@ class ContentRepository private constructor(
 
     fun getFavoriteTvById(id: Int?) = localDataSource.getFavoriteTvById(id)
 
-    fun getAllFavoriteTv() = appExecutors.diskIO().execute { localDataSource.getFavoriteTv() }
+    fun getAllFavoriteTv() = localDataSource.getFavoriteTv()
 
     fun deleteFavoriteTv(tv: DetailTvResponse) =
         appExecutors.diskIO().execute { localDataSource.deleteFavoriteTv(tv) }
