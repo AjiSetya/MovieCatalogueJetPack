@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.blogsetyaaji.moviecatalogue.R
 import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
@@ -15,7 +17,7 @@ import com.blogsetyaaji.moviecatalogue.ui.detailtv.DetailTvActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
+class TvAdapter : PagedListAdapter<TvEntity, TvAdapter.TvViewHolder>(DIFF_CALLBACK) {
     private var listTv = ArrayList<TvEntity?>()
 
     fun setTv(tv: List<TvEntity?>?) {
@@ -68,6 +70,17 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
                             .error(R.drawable.ic_error)
                     )
                     .into(posterItem)
+            }
+        }
+    }
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvEntity>() {
+            override fun areItemsTheSame(oldItem: TvEntity, newItem: TvEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+            override fun areContentsTheSame(oldItem: TvEntity, newItem: TvEntity): Boolean {
+                return oldItem == newItem
             }
         }
     }
