@@ -1,6 +1,7 @@
 package com.blogsetyaaji.moviecatalogue.data.source.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import com.blogsetyaaji.moviecatalogue.data.source.local.entity.MovieEntity
 import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse
@@ -8,7 +9,7 @@ import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM tb_movie")
-    fun getMovie(): LiveData<List<MovieEntity?>?>
+    fun getMovie(): DataSource.Factory<Int, MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: List<MovieEntity?>?)

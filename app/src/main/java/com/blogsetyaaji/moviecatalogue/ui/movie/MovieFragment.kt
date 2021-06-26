@@ -38,8 +38,7 @@ class MovieFragment : Fragment() {
                         Status.LOADING -> binding.pgMovie.visibility = View.VISIBLE
                         Status.SUCCESS -> {
                             binding.pgMovie.visibility = View.GONE
-                            movieAdapter.setMovies(movies.data)
-                            movieAdapter.notifyDataSetChanged()
+                            movieAdapter.submitList(movies.data)
                         }
                         Status.ERROR -> {
                             binding.pgMovie.visibility = View.GONE

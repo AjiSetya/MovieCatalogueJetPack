@@ -43,8 +43,7 @@ class TvFragment : Fragment() {
                         Status.LOADING -> binding.pgTv.visibility = View.VISIBLE
                         Status.SUCCESS -> {
                             binding.pgTv.visibility = View.GONE
-                            tvAdapter.setTv(tv.data)
-                            tvAdapter.notifyDataSetChanged()
+                            tvAdapter.submitList(tv.data)
                         }
                         Status.ERROR -> {
                             binding.pgTv.visibility = View.GONE
