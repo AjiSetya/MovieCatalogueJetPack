@@ -43,7 +43,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun loadDetailMovie() {
+    fun loadDetailAndFavoriteMovie() {
         var titleMovie: String
 
         onView(withText(R.string.movie)).perform(ViewActions.click())
@@ -65,11 +65,11 @@ class MainActivityTest {
         onView(withId(R.id.vote_detail_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.img_detail_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rating_detail_movie)).check(matches(isDisplayed()))
+
         onView(withId(R.id.detail_movie_favorite)).perform(ViewActions.click())
         onView(withId(R.id.detail_movie_back)).perform(ViewActions.click())
 
         onView(withId(R.id.item_fav)).perform(ViewActions.click())
-
         onView(withText(R.string.movie)).perform(ViewActions.click())
         onView(withId(R.id.rv_fav_movie)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
@@ -89,6 +89,8 @@ class MainActivityTest {
         onView(withId(R.id.vote_detail_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.img_detail_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rating_detail_movie)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.detail_movie_favorite)).perform(ViewActions.click())
         onView(withId(R.id.detail_movie_back)).perform(ViewActions.click())
     }
 
@@ -104,7 +106,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun loadDetailTv() {
+    fun loadDetailAndFavoriteTv() {
         var titleTv: String
 
         onView(withText(R.string.tv)).perform(ViewActions.click())
@@ -126,6 +128,7 @@ class MainActivityTest {
         onView(withId(R.id.vote_detail_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.img_detail_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.rating_detail_tv)).check(matches(isDisplayed()))
+
         onView(withId(R.id.detail_tv_favorite)).perform(ViewActions.click())
         onView(withId(R.id.detail_tv_back)).perform(ViewActions.click())
 
@@ -150,6 +153,8 @@ class MainActivityTest {
         onView(withId(R.id.vote_detail_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.img_detail_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.rating_detail_tv)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.detail_tv_favorite)).perform(ViewActions.click())
         onView(withId(R.id.detail_tv_back)).perform(ViewActions.click())
     }
 }
