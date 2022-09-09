@@ -1,29 +1,59 @@
 package com.blogsetyaaji.moviecatalogue.ui.detailtv
 
-import com.blogsetyaaji.moviecatalogue.utils.TvDummy
-import junit.framework.TestCase
-import kotlin.random.Random
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.blogsetyaaji.moviecatalogue.BuildConfig
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.tv.DetailTvResponse
+import com.blogsetyaaji.moviecatalogue.data.ContentRepository
+import com.blogsetyaaji.moviecatalogue.utils.DataDummy
+import com.blogsetyaaji.moviecatalogue.vo.Resource
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
+import org.mockito.junit.MockitoJUnitRunner
 
-class DetailTvViewModelTest : TestCase() {
-    private val randomNumber = Random.nextInt(0, TvDummy.generateDummyTv().size - 1)
-    private lateinit var detailTvViewModel: DetailTvViewModel
-    private val tvDummy = TvDummy.generateDummyTv()[randomNumber]
+@RunWith(MockitoJUnitRunner::class)
+class DetailTvViewModelTest {
 
-    override fun setUp() {
-        super.setUp()
-        detailTvViewModel = DetailTvViewModel()
+
+    private lateinit var viewModel: DetailTvViewModel
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Mock
+    private lateinit var observer: Observer<Resource<DetailTvResponse>>
+
+    @Mock
+    private lateinit var contentRepository: ContentRepository
+
+    @Before
+    fun setUp() {
+        viewModel = DetailTvViewModel(contentRepository)
     }
 
-    fun testGetTvByPosition() {
-        detailTvViewModel.getTvByPosition(randomNumber)
-        val result = detailTvViewModel.data
+    @Test
+    fun testGetMovies() {
+        val dummyTv = Resource.success(DataDummy.generateDummyDetailTv())
+        val detailTv = MutableLiveData<Resource<DetailTvResponse>>()
+        detailTv.value = dummyTv
 
-        assertNotNull(result)
-        assertEquals(tvDummy.name, result?.name)
-        assertEquals(tvDummy.overview, result?.overview)
-        assertEquals(tvDummy.poster, result?.poster)
-        assertEquals(tvDummy.rating, result?.rating)
-        assertEquals(tvDummy.relaseDate, result?.relaseDate)
-        assertEquals(tvDummy.episode, result?.episode)
+        `when`(contentRepository.getDetailTv(399566, BuildConfig.MYAPI_KEY)).thenReturn(
+            detailTv
+        )
+        val detail = viewModel.getDetailTv(399566).value
+        verify(contentRepository).getDetailTv(399566, BuildConfig.MYAPI_KEY)
+        assertNotNull(detail)
+        assertEquals(dummyTv.data?.name, detail?.data?.name)
+
+        viewModel.getDetailTv(399566).observeForever(observer)
+        verify(observer).onChanged(dummyTv)
     }
 }

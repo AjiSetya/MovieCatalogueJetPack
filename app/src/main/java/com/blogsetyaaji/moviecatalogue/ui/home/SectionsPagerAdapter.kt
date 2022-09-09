@@ -12,10 +12,6 @@ import com.blogsetyaaji.moviecatalogue.ui.tv.TvFragment
 
 class SectionsPagerAdapter(private val mContext: Context, supportFragmentManager: FragmentManager) :
     FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    companion object {
-        @StringRes
-        private val TAB_TITLES = intArrayOf(R.string.movie, R.string.tv)
-    }
 
     override fun getItem(position: Int): Fragment =
         when (position) {
@@ -28,4 +24,9 @@ class SectionsPagerAdapter(private val mContext: Context, supportFragmentManager
         mContext.resources.getString(TAB_TITLES[position])
 
     override fun getCount(): Int = TAB_TITLES.size
+
+    companion object {
+        @StringRes
+        private val TAB_TITLES = intArrayOf(R.string.movie, R.string.tv)
+    }
 }

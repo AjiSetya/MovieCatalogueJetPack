@@ -4,38 +4,60 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogsetyaaji.moviecatalogue.R
-import kotlinx.android.synthetic.main.fragment_tv.*
+import com.blogsetyaaji.moviecatalogue.databinding.FragmentTvBinding
+import com.blogsetyaaji.moviecatalogue.viewmodel.ViewModelFactory
+import com.blogsetyaaji.moviecatalogue.vo.Status
 
 
 class TvFragment : Fragment() {
+    private lateinit var binding: FragmentTvBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv, container, false)
+    ): View {
+        binding = FragmentTvBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(
-                this,
-                ViewModelProvider.NewInstanceFactory()
-            )[TvViewModel::class.java]
-            val tv = viewModel.getTv()
+            val factory = ViewModelFactory.getInstance(context)
+            val viewModel = ViewModelProvider(this, factory)[TvViewModel::class.java]
 
             val tvAdapter = TvAdapter()
-            tvAdapter.setTv(tv)
 
-            rv_tv.layoutManager = LinearLayoutManager(context)
-            rv_tv.setHasFixedSize(true)
-            rv_tv.adapter = tvAdapter
+
+            viewModel.getTv().observe(viewLifecycleOwner, { tv ->
+                binding.pgTv.visibility = View.GONE
+                tvAdapter.setTv(tv.data)
+                tvAdapter.notifyDataSetChanged()
+                if (tv != null) {
+                    when (tv.status) {
+                        Status.LOADING -> binding.pgTv.visibility = View.VISIBLE
+                        Status.SUCCESS -> {
+                            binding.pgTv.visibility = View.GONE
+                            tvAdapter.submitList(tv.data)
+                        }
+                        Status.ERROR -> {
+                            binding.pgTv.visibility = View.GONE
+                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            })
+
+            with(binding.rvTv) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = tvAdapter
+            }
         }
     }
 }

@@ -1,9 +1,14 @@
 package com.blogsetyaaji.moviecatalogue.ui.movie
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.blogsetyaaji.moviecatalogue.data.Movie
-import com.blogsetyaaji.moviecatalogue.utils.MovieDummy
+import androidx.paging.PagedList
+import com.blogsetyaaji.moviecatalogue.BuildConfig
+import com.blogsetyaaji.moviecatalogue.data.ContentRepository
+import com.blogsetyaaji.moviecatalogue.data.source.local.entity.MovieEntity
+import com.blogsetyaaji.moviecatalogue.vo.Resource
 
-class MovieViewModel: ViewModel() {
-    fun getMovies(): List<Movie> = MovieDummy.generateDummyMovies()
+class MovieViewModel(private val contentRepository: ContentRepository) : ViewModel() {
+    fun getMovie(): LiveData<Resource<PagedList<MovieEntity>>> =
+        contentRepository.getAllMovies(BuildConfig.MYAPI_KEY)
 }

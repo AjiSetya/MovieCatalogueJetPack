@@ -2,24 +2,34 @@ package com.blogsetyaaji.moviecatalogue.ui.home
 
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.rule.ActivityTestRule
 import com.blogsetyaaji.moviecatalogue.R
-import com.blogsetyaaji.moviecatalogue.utils.MovieDummy
-import com.blogsetyaaji.moviecatalogue.utils.TvDummy
-import org.junit.Rule
+import com.blogsetyaaji.moviecatalogue.utils.EspressoIdlingResource
+import com.blogsetyaaji.moviecatalogue.utils.HelperUtils.Companion.getTitleRecyclerViewMovie
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
+import kotlin.random.Random
 
 class MainActivityTest {
-    private val dummyMovie = MovieDummy.generateDummyMovies()[0]
-    private val dummyTV = TvDummy.generateDummyTv()[0]
+    private val randomNumber = Random.nextInt(0, 7)
 
-    @get:Rule
-    val activityRule = ActivityTestRule(MainActivity::class.java)
+    @Before
+    fun setUp() {
+        ActivityScenario.launch(MainActivity::class.java)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
 
     @Test
     fun loadMovie() {
@@ -27,60 +37,124 @@ class MainActivityTest {
         onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                MovieDummy.generateDummyMovies().size - 1
+                randomNumber
             )
         )
     }
 
     @Test
-    fun loadDetailMovie(){
+    fun loadDetailAndFavoriteMovie() {
+        var titleMovie: String
+
         onView(withText(R.string.movie)).perform(ViewActions.click())
         onView(withId(R.id.rv_movie)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                randomNumber
+            )
+        ).also {
+            titleMovie = getTitleRecyclerViewMovie(it, randomNumber)
+        }.perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                randomNumber,
+                ViewActions.click()
+            )
+        )
+        onView(withId(R.id.text_name_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.text_name_movie)).check(matches(withText(titleMovie)))
+        onView(withId(R.id.text_desc_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.vote_detail_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.img_detail_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.rating_detail_movie)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.detail_movie_favorite)).perform(ViewActions.click())
+        onView(withId(R.id.detail_movie_back)).perform(ViewActions.click())
+
+        onView(withId(R.id.item_fav)).perform(ViewActions.click())
+        onView(withText(R.string.movie)).perform(ViewActions.click())
+        onView(withId(R.id.rv_fav_movie)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                0
+            )
+        ).also {
+            titleMovie = getTitleRecyclerViewMovie(it, 0)
+        }.perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
                 ViewActions.click()
             )
         )
         onView(withId(R.id.text_name_movie)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_name_movie)).check(matches(withText(dummyMovie.name)))
+        onView(withId(R.id.text_name_movie)).check(matches(withText(titleMovie)))
         onView(withId(R.id.text_desc_movie)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_desc_movie)).check(matches(withText(dummyMovie.overview)))
         onView(withId(R.id.vote_detail_movie)).check(matches(isDisplayed()))
-        onView(withId(R.id.vote_detail_movie)).check(matches(withText(dummyMovie.rating.toString())))
         onView(withId(R.id.img_detail_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rating_detail_movie)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.detail_movie_favorite)).perform(ViewActions.click())
         onView(withId(R.id.detail_movie_back)).perform(ViewActions.click())
     }
 
     @Test
-    fun loadTv(){
+    fun loadTv() {
         onView(withText(R.string.tv)).perform(ViewActions.click())
         onView(withId(R.id.rv_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_tv)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                TvDummy.generateDummyTv().size - 1
+                randomNumber
             )
         )
     }
 
     @Test
-    fun loadDetailTv(){
+    fun loadDetailAndFavoriteTv() {
+        var titleTv: String
+
         onView(withText(R.string.tv)).perform(ViewActions.click())
         onView(withId(R.id.rv_tv)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                randomNumber
+            )
+        ).also {
+            titleTv = getTitleRecyclerViewMovie(it, randomNumber)
+        }.perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                randomNumber,
+                ViewActions.click()
+            )
+        )
+        onView(withId(R.id.text_name_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.text_name_tv)).check(matches(withText(titleTv)))
+        onView(withId(R.id.text_desc_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.vote_detail_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.img_detail_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.rating_detail_tv)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.detail_tv_favorite)).perform(ViewActions.click())
+        onView(withId(R.id.detail_tv_back)).perform(ViewActions.click())
+
+        onView(withId(R.id.item_fav)).perform(ViewActions.click())
+
+        onView(withText(R.string.tv)).perform(ViewActions.click())
+        onView(withId(R.id.rv_fav_tv)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                0
+            )
+        ).also {
+            titleTv = getTitleRecyclerViewMovie(it, 0)
+        }.perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
                 ViewActions.click()
             )
         )
         onView(withId(R.id.text_name_tv)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_name_tv)).check(matches(withText(dummyTV.name)))
+        onView(withId(R.id.text_name_tv)).check(matches(withText(titleTv)))
         onView(withId(R.id.text_desc_tv)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_desc_tv)).check(matches(withText(dummyTV.overview)))
         onView(withId(R.id.vote_detail_tv)).check(matches(isDisplayed()))
-        onView(withId(R.id.vote_detail_tv)).check(matches(withText(dummyTV.rating.toString())))
         onView(withId(R.id.img_detail_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.rating_detail_tv)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.detail_tv_favorite)).perform(ViewActions.click())
         onView(withId(R.id.detail_tv_back)).perform(ViewActions.click())
     }
-
 }

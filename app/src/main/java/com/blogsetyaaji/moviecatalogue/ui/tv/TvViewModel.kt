@@ -1,10 +1,14 @@
 package com.blogsetyaaji.moviecatalogue.ui.tv
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.blogsetyaaji.moviecatalogue.data.Tv
-import com.blogsetyaaji.moviecatalogue.utils.TvDummy
+import androidx.paging.PagedList
+import com.blogsetyaaji.moviecatalogue.BuildConfig
+import com.blogsetyaaji.moviecatalogue.data.ContentRepository
+import com.blogsetyaaji.moviecatalogue.data.source.local.entity.TvEntity
+import com.blogsetyaaji.moviecatalogue.vo.Resource
 
-class TvViewModel: ViewModel() {
-    fun getTv(): List<Tv> = TvDummy.generateDummyTv()
-
+class TvViewModel(private val contentRepository: ContentRepository) : ViewModel() {
+    fun getTv(): LiveData<Resource<PagedList<TvEntity>>> =
+        contentRepository.getAllTv(BuildConfig.MYAPI_KEY)
 }

@@ -1,48 +1,122 @@
 package com.blogsetyaaji.moviecatalogue.ui.detailmovie
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.blogsetyaaji.moviecatalogue.R
+import com.blogsetyaaji.moviecatalogue.data.source.local.entity.MovieEntity
+import com.blogsetyaaji.moviecatalogue.data.source.remote.response.detail.movie.DetailMovieResponse
 import com.blogsetyaaji.moviecatalogue.databinding.ActivityDetailMovieBinding
+import com.blogsetyaaji.moviecatalogue.viewmodel.ViewModelFactory
+import com.blogsetyaaji.moviecatalogue.vo.Status
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
 class DetailMovieActivity : AppCompatActivity() {
-
-    companion object {
-        const val EXTRA_MOVIE = "DetailMovie"
-    }
+    private var isFavorite: Boolean = false
+    private lateinit var detailMovie: DetailMovieResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val activityDetailMovieBinding: ActivityDetailMovieBinding =
+        val binding: ActivityDetailMovieBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_detail_movie)
 
-        val positiion: Int = intent.getIntExtra(EXTRA_MOVIE, 0)
-        val viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[DetailMovieViewModel::class.java]
+        val itemMovie: MovieEntity? = intent.getParcelableExtra(EXTRA_MOVIE)
 
-        viewModel.getMovieByPosition(positiion)
+        val factory = ViewModelFactory.getInstance(applicationContext)
+        val viewModel = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
 
-        activityDetailMovieBinding.lifecycleOwner = this
-        activityDetailMovieBinding.viewModelDetailMovie = viewModel
+        viewModel.getDetailMovie(itemMovie?.id).observe(this, { movies ->
+            if (movies != null) {
+                when (movies.status) {
+                    Status.LOADING -> binding.pgDetailMovie.visibility = View.VISIBLE
+                    Status.SUCCESS -> {
+                        detailMovie = movies.data!!
 
-        detail_movie_back.setOnClickListener { supportFinishAfterTransition() }
-        detail_movie_share.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Hi, I have interesting movie for you!\n\n" +
-                        "${viewModel.data?.name}\n\nRating: ${viewModel.data?.rating}\n" +
-                        "Storyline:\n${viewModel.data?.overview}")
-                type = "text/plain"
+                        binding.pgDetailMovie.visibility = View.GONE
+
+                        binding.detailMovieShare.setOnClickListener {
+                            val sendIntent: Intent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(
+                                    Intent.EXTRA_TEXT, "Hi, I have interesting movie for you!\n\n" +
+                                            "${movies.data?.title}\n\nRating: ${movies.data?.voteAverage}\n" +
+                                            "Storyline:\n${movies.data?.overview}"
+                                )
+                                type = "text/plain"
+                            }
+
+                            val shareIntent = Intent.createChooser(sendIntent, null)
+                            startActivity(shareIntent)
+                        }
+                    }
+                    Status.ERROR -> {
+                        binding.pgDetailMovie.visibility = View.GONE
+                        Toast.makeText(applicationContext, R.string.error, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
             }
 
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+        })
+
+        viewModel.getFavoriteMovie(itemMovie?.id).observe(this, {
+            isFavorite = if (it?.id == itemMovie?.id) {
+                binding.detailMovieFavorite.setImageResource(R.drawable.ic_baseline_favorite_selected)
+                true
+            } else {
+                binding.detailMovieFavorite.setImageResource(R.drawable.ic_baseline_favorite_unselected)
+                false
+            }
+        })
+
+        binding.detailMovieFavorite.setOnClickListener {
+            if (this::detailMovie.isInitialized) {
+                if (isFavorite) {
+                    viewModel.deleteMovieFromFavorite(detailMovie)
+                } else {
+                    viewModel.addMovieToFavorite(detailMovie)
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
+
+        Glide.with(this)
+            .load("https://image.tmdb.org/t/p/w500" + itemMovie?.posterPath)
+            .apply(
+                RequestOptions.placeholderOf(R.drawable.ic_loading)
+                    .error(R.drawable.ic_error)
+            ).into(binding.imgDetailMovie)
+
+        Glide.with(this)
+            .load("https://image.tmdb.org/t/p/w500" + itemMovie?.posterPath)
+            .apply(
+                RequestOptions.placeholderOf(R.drawable.ic_loading)
+                    .error(R.drawable.ic_error)
+            ).into(binding.bgDetailMovie)
+
+        binding.textNameMovie.text = itemMovie?.title
+        binding.ratingDetailMovie.rating =
+            itemMovie?.voteAverage?.div(2)?.toFloat()!!
+
+        binding.detailMovieBack.setOnClickListener {
+            supportFinishAfterTransition()
+        }
+
+        binding.run {
+            lifecycleOwner = this@DetailMovieActivity
+            viewModelDetailMovie = viewModel
+        }
+    }
+
+    companion object {
+        const val EXTRA_MOVIE = "DetailMovie"
     }
 }
